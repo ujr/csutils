@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Sylphe.Utils
 {
-    public static partial class Algorithms
-    {
+	public static partial class Algorithms
+	{
 		/// <summary>
 		/// An implementation of Jeffrey Vitter's Reservoir Sampling:
 		/// Given a (large) sequence of <paramref name="items"/>,
@@ -32,9 +32,9 @@ namespace Sylphe.Utils
 				throw new ArgumentException("Need sample size at least 1", nameof(k));
 
 			if (random == null)
-            {
+			{
 				random = new Random();
-            }
+			}
 
 			int itemCount = 0;
 			var reservoir = new List<T>(k);
@@ -59,5 +59,5 @@ namespace Sylphe.Utils
 
 			return reservoir;
 		}
-    }
+	}
 }

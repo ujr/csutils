@@ -7,12 +7,12 @@ namespace Sylphe.Utils.Test
 {
 	public class ListUtilsTest
 	{
-        private readonly ITestOutputHelper _output;
+		private readonly ITestOutputHelper _output;
 
-        public ListUtilsTest(ITestOutputHelper output)
-        {
-            _output = output;
-        }
+		public ListUtilsTest(ITestOutputHelper output)
+		{
+			_output = output;
+		}
 
 		[Fact]
 		public void SwapTest()
@@ -24,17 +24,17 @@ namespace Sylphe.Utils.Test
 
 			list.Swap(1, 1); // as extension
 
-            Assert.Equal(MakeArray(3, 1, 2), list);
+			Assert.Equal(MakeArray(3, 1, 2), list);
 		}
 
-        [Fact]
-        public void BinarySearchEmptyTest()
-        {
-            int[] empty = {};
+		[Fact]
+		public void BinarySearchEmptyTest()
+		{
+			int[] empty = {};
 
-            Assert.Equal(0, ~empty.BinarySearch(5));
-            Assert.Equal(0, ~empty.BinarySearch(-2));
-        }
+			Assert.Equal(0, ~empty.BinarySearch(5));
+			Assert.Equal(0, ~empty.BinarySearch(-2));
+		}
 
 		[Fact]
 		public void BinarySearchTest()
@@ -77,23 +77,23 @@ namespace Sylphe.Utils.Test
 			int[] expected6 = { 5, 2, 3, 1, 4 };
 
 			array.Rotate(3);
-            Assert.Equal(expected1, array);
+			Assert.Equal(expected1, array);
 
 			array.Rotate(-1);
-            Assert.Equal(expected2, array);
+			Assert.Equal(expected2, array);
 
 			array.Rotate(9);
-            Assert.Equal(expected3, array);
+			Assert.Equal(expected3, array);
 
 			array.Rotate(-12);
-            Assert.Equal(expected4, array);
+			Assert.Equal(expected4, array);
 
 			// Rotate array[1..3], leave array[0] and array[4]:
 			array.Rotate(1, 1, 3);
-            Assert.Equal(expected5, array);
+			Assert.Equal(expected5, array);
 
 			array.Rotate(4, 3, 2);
-            Assert.Equal(expected6, array);
+			Assert.Equal(expected6, array);
 		}
 
 		[Fact]
@@ -112,9 +112,9 @@ namespace Sylphe.Utils.Test
 			var empty = (IList<int>) new List<int>();
 
 			empty.Reverse();
-            empty.Reverse(0, 0);
+			empty.Reverse(0, 0);
 
-            Assert.Empty(empty);
+			Assert.Empty(empty);
 		}
 
 		[Fact]
@@ -122,7 +122,7 @@ namespace Sylphe.Utils.Test
 		{
 			IList<int> list0 = new int[0];
 			ListUtils.Reverse(list0, 0, 0);
-            Assert.Equal(0, list0.Count);
+			Assert.Equal(0, list0.Count);
 
 			IList<int> list1 = new[] {1};
 			ListUtils.Reverse(list1, 0, 1);
@@ -132,29 +132,29 @@ namespace Sylphe.Utils.Test
 			ListUtils.Reverse(list2);
 			ListUtils.Reverse(list2, 0, 1);
 			ListUtils.Reverse(list2, 1, 1);
-            Assert.Equal(MakeArray(2, 1), list2);
+			Assert.Equal(MakeArray(2, 1), list2);
 
 			IList<int> list3 = new[] {1, 2, 3};
 			ListUtils.Reverse(list3, 0, 2);
 			ListUtils.Reverse(list3, 1, 2);
 			ListUtils.Reverse(list3);
-            Assert.Equal(MakeArray(1, 3, 2), list3);
+			Assert.Equal(MakeArray(1, 3, 2), list3);
 		}
 
-        [Fact]
-        public void IndexedSortEmptyTest()
-        {
-            var empty = new List<int>();
+		[Fact]
+		public void IndexedSortEmptyTest()
+		{
+			var empty = new List<int>();
 
-            ListUtils.Sort(empty, CompareIndexed);
+			ListUtils.Sort(empty, CompareIndexed);
 
-            Assert.Empty(empty);
-        }
+			Assert.Empty(empty);
+		}
 
 		[Fact]
 		public void IndexedSortTest()
 		{
-            var one = new[] { 77 };
+			var one = new[] { 77 };
 			var two = new[] { 4, 2 };
 			var three = new[] { 2, 3, 1 };
 			var four = new[] { 4, 3, 2, 1 };
@@ -162,7 +162,7 @@ namespace Sylphe.Utils.Test
 			var ties = new[] {6, 3, 7, 3, 3, 5, 6};
 
 			ListUtils.Sort(one, CompareIndexed);
-            Assert.Equal(MakeArray(77), one);
+			Assert.Equal(MakeArray(77), one);
 
 			ListUtils.Sort(two, CompareIndexed);
 			Assert.Equal(MakeArray(2, 4), two);
@@ -197,15 +197,15 @@ namespace Sylphe.Utils.Test
 			return Math.Sign(x1 - x2);
 		}
 
-        [Fact]
-        public void ElementSortEmptyTest()
-        {
-            var empty = new List<int>();
+		[Fact]
+		public void ElementSortEmptyTest()
+		{
+			var empty = new List<int>();
 
-            ListUtils.Sort(empty, CompareElement);
+			ListUtils.Sort(empty, CompareElement);
 
-            Assert.Empty(empty);
-        }
+			Assert.Empty(empty);
+		}
 
 		[Fact]
 		public void ElementSortTest()
@@ -299,7 +299,7 @@ namespace Sylphe.Utils.Test
 			}
 			TimeSpan indexedTime = DateTime.Now - startTime;
 			_output.WriteLine(@"Sorting {0} times {1} ints using CompareIndexed: {2}",
-			                  repeatCount, temp.Length, indexedTime);
+							  repeatCount, temp.Length, indexedTime);
 
 			startTime = DateTime.Now;
 			for (int i = 0; i < repeatCount; i++)
@@ -309,12 +309,12 @@ namespace Sylphe.Utils.Test
 			}
 			TimeSpan elementTime = DateTime.Now - startTime;
 			_output.WriteLine(@"Sorting {0} times {1} ints using CompareElement: {2}",
-			                  repeatCount, temp.Length, elementTime);
+							  repeatCount, temp.Length, elementTime);
 		}
 
-        private static T[] MakeArray<T>(params T[] args)
-        {
-            return args;
-        }
+		private static T[] MakeArray<T>(params T[] args)
+		{
+			return args;
+		}
 	}
 }

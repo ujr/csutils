@@ -183,7 +183,7 @@ namespace Sylphe.Utils.Test
 		public void ToStringTest()
 		{
 			string s = BitUtils.ToString(-1, true); // tight
-            Assert.Equal("11111111111111111111111111111111", s);
+			Assert.Equal("11111111111111111111111111111111", s);
 
 			s = BitUtils.ToString(-1);
 			Assert.Equal("11111111 11111111 11111111 11111111", s);

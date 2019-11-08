@@ -119,20 +119,20 @@ namespace Sylphe.Utils
 			Reverse(list, index, count);
 		}
 
-        public static void Sort<T>(this IList<T> list, Func<IList<T>, int, int, int> compare)
-        {
-            QuickSort(0, list.Count - 1, list, compare);
-        }
+		public static void Sort<T>(this IList<T> list, Func<IList<T>, int, int, int> compare)
+		{
+			QuickSort(0, list.Count - 1, list, compare);
+		}
 
 		public static void Sort<T>(this IList<T> list, int startIndex, int count, Func<IList<T>, int, int, int> compare)
 		{
 			QuickSort(startIndex, startIndex + count - 1, list, compare);
 		}
 
-        public static void Sort<T>(this IList<T> list, Func<T, T, int> compare)
-        {
-            QuickSort(0, list.Count - 1, list, compare);
-        }
+		public static void Sort<T>(this IList<T> list, Func<T, T, int> compare)
+		{
+			QuickSort(0, list.Count - 1, list, compare);
+		}
 
 		public static void Sort<T>(this IList<T> list, int startIndex, int count, Func<T, T, int> compare)
 		{

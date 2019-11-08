@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Sylphe.Utils
 {
-    public static partial class Algorithms
-    {
-        /// <summary>
-        /// Shuffle the given <paramref name="list"/> into a random order.
-        /// Optionally, <paramref name="random"/> is the randomness to use.
-        /// </summary>
+	public static partial class Algorithms
+	{
+		/// <summary>
+		/// Shuffle the given <paramref name="list"/> into a random order.
+		/// Optionally, <paramref name="random"/> is the randomness to use.
+		/// </summary>
 		public static void Shuffle<T>(this IList<T> list, Random random = null)
 		{
 			// This is essentially Fisher-Yates shuffle:
@@ -24,16 +24,16 @@ namespace Sylphe.Utils
 			// The code below attempts to spare one assigment from
 			// the loop at the price of more code outside the loop.
 
-            if (list == null)
-                throw new ArgumentNullException(nameof(list));
+			if (list == null)
+				throw new ArgumentNullException(nameof(list));
 
 			int count = list.Count;
 			if (count < 2) return;
 
-            if (random == null)
-            {
-                random = new Random();
-            }
+			if (random == null)
+			{
+				random = new Random();
+			}
 
 			int r, last = count - 1;
 			T x = list[last]; // remember last item
@@ -55,5 +55,5 @@ namespace Sylphe.Utils
 			// The last three lines are short for:
 			// list[0] = x; Swap(list, 0, random.Next(count));
 		}
-    }
+	}
 }
