@@ -13,7 +13,7 @@ Developed mainly in Zurich under the lead of Erich Gamma.
 [xUnit.net][xunit] is a free and open-source unit testing framework 
 for .NET under the .NET Foundation. 
 
-[EditorConfig][ec] helps maintain consistent coding style across editors 
+[EditorConfig][edconf] helps maintain consistent coding style across editors 
 by means of a file *.editorconfig* that documents your style settings. 
 Many editors honour *.editorconfig* directly or via an extension.
 
@@ -25,11 +25,11 @@ a [repo with .gitignore templates](https://github.com/github/gitignore)).
 Concepts & Guides
 -----------------
 
-.NET Core is documented in Microsoft's [.NET Core Guide][core], 
-including sources for download of the SDK and the runtime.
+**.NET Core** is documented in Microsoft's [.NET Core Guide][core], 
+which includes sources for download of the SDK and the runtime.
 
 The .NET Core Guide has a useful section about 
-[Unit Testing Best Practices](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices).
+[**Unit Testing** Best Practices](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices).
 
  - Test naming: *method_scenario_behaviour* (may yield very many tests)
  - Test structure: **arrange, act, assert** (known as the "3A pattern")
@@ -37,18 +37,21 @@ The .NET Core Guide has a useful section about
    a **Stub** simply stands in for a dependency
    whereas a **Mock** is asserted against.
 
-What open-source license? 
+**JSON** (JavaScript Object Notation) is a plain-text exchange format
+based on the object literal notation of JavaScript. The MIME Type
+is `application/json`, the file extension typically `.json`, and
+the website is at [json.org][json].
+
+What **open-source license?** 
 Try [choosealicense.com](https://choosealicense.com/)
 created by the GitHub folks.
 Other options are [opensource.org](https://opensource.org/) 
 and [unlicense.org](https://unlicense.org/).
 
 
-
-
-
 [vscode]: https://code.visualstudio.com/
 [xunit]: https://xunit.net/
-[ec]: https://editorconfig.org/
+[edconf]: https://editorconfig.org/
 
 [core]: https://docs.microsoft.com/en-us/dotnet/core/
+[json]: https://json.org/
