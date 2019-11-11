@@ -23,4 +23,4 @@ Utilities
  - Json/JsonWriter.cs - simple API to write syntactically correct JSON
  - Json/JsonReader.cs - a low-level reader for JSON data
  - Json/JsonException.cs - used by JsonReader (but not by JsonWriter)
- 
+ - Json/Json.cs - minimalistic JSON serialization and hydratisation (dynamics)
