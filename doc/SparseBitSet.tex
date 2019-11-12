@@ -1,0 +1,68 @@
+\input epsf
+\magnification\magstephalf
+\nopagenumbers
+\font\tf=cmr17
+\font\sf=cmr8
+\def\shr{\mathop{>\!>}}
+\def\shl{\mathop{<\!<}}
+\def\pop{\mathord{\rm pop}}
+
+\topglue1pc
+\centerline{\tf Sparse Fixed Bit Set}
+\bigskip
+\noindent
+Here is a useful data structure for representing sets of at most
+$n$ bits identified by non-negative integer numbers~$i$. It saves
+on memory by dividing bit space into chunks of 64 words \`a 64 bits
+and storing only non-zero words, assuming all other words to be zero.
+Given a bit number $i$, the least significant 6 bits are the number
+of the bit within the word, the next 6 bits are the number $k$ of the
+word within the chunk, and the remaining (most significant) bits are the
+chunk number~$j$.
+\smallskip
+\centerline{\epsfbox{SparseBitSet.2}}
+\smallskip
+\noindent
+Both the size $n$ and bit numbers $i$ are represented by 32~bit integers
+({\tt int} in C\#). Since only non-negative integers are used (sign bit
+is always zero), the size is at most $2^{31}=2\,147\,483\,648$ bits.
+The structure uses two parallel arrays of size $\lceil n/4096\rceil$,
+the ``catalog'' (holding 64 bit words) and the ``chunk list'' (holding
+pointers to the chunks). Chunks are arrays of up to 64 words of 64 bits,
+that is, type {\tt ulong[]} in C\#.
+\medskip
+\centerline{\epsfxsize=\hsize\epsfbox{SparseBitSet.1}}
+\medskip
+\noindent
+To determine if bit~$i$ is set ({\tt true}) of clear ({\tt false}),
+proceed as follows:
+\smallskip
+\item{\sf1.} assert $0\le i<n$
+\item{\sf2.} let $j=i\shr12$, the index into {\tt catalog} and {\tt chunks}
+\item{\sf3.} let $k=i\shr6$, the word number within the chunk
+\item{\sf4.} let $f={\tt catalog}[j]$, the chunk's `non-empty' flags
+\item{\sf5.} if $(f\&((1\shl k))=0$: return {\tt false} (word $k$ in chunk $j$ is all zero and ${\tt chunks}[j]$ is {\tt null})
+\item{\sf6.} let $o=\pop(f\&((1\shl k)-1))$, the number of 1 bits right of bit $k$ in $f$
+\item{\sf7.} let $w={\tt chunks}[j][o]$, the word of bits
+\item{\sf8.} return $(w\&(1\shl i))\not=0$, extract bit $i\&{\tt 3F}_{16}$
+\smallskip
+\noindent
+This procedure assumes that only the low 5 (for {\tt int}) or
+6 (for {\tt long}) bits of the shift count are used, such that,
+for example, $x\shl32\equiv x\shl0$ and $x\shl33\equiv x\shl1$
+etc. This is true of both C\# (CLR) and Java (JVM).
+If this is not true, high-order bits must be masked away explicitly:
+let $k=(i\shr6)\&{\tt 3F}_{16}$ in step~3 and
+return $(w\&(1\shl(i\&{\tt 3F}_{16})))\not=0$ in step~8.
+
+Pop is the ``population count'' function that returns the number
+of 1 bits in its argument. For example, $\pop(5)=2$ because $5_{10}=101_2$.
+This can be efficiently implemented (or is provided as a CPU instruction).
+The idiom ``$(1\shl k)-1$'' creates a bit mask where all bits right of
+bit~$k$ are 1 and all other bits are zero; for example, $(1\shl4)-1=1111_2$.
+
+\medskip\noindent
+Setting and clearing bits is similar, but involves allocating/releasing
+chunk arrays and adding words to / removing words from the chunk arrays.
+
+\bye
