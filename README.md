@@ -20,6 +20,7 @@ Utilities
  - Utils/Reservoir.cs - reservoir sampling (*k* random items from an `IEnumerable`)
  - Utils/Shuffle.cs - shuffling an `IList<T>` (rearrange in random order)
  - Utils/SparseBitSet.cs - fixed size bit set, suitable for sparse data
+ - Utils/StringUtils.cs - utilities for strings, some for rare use cases
 
  - Json/JsonWriter.cs - simple API to write syntactically correct JSON
  - Json/JsonReader.cs - a low-level reader for JSON data
