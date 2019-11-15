@@ -17,6 +17,7 @@ Utilities
 
  - Utils/BitUtils.cs - bit query and manipulation methods
  - Utils/ListUtils.cs - some `List<T>` methods but for `IList<T>`
+ - Utils/Parsing.cs - parsing text strings (mostly lexical scanning)
  - Utils/Reservoir.cs - reservoir sampling (*k* random items from an `IEnumerable`)
  - Utils/Shuffle.cs - shuffling an `IList<T>` (rearrange in random order)
  - Utils/SparseBitSet.cs - fixed size bit set, suitable for sparse data
