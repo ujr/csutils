@@ -22,6 +22,7 @@ Utilities
  - Utils/Shuffle.cs - shuffling an `IList<T>` (rearrange in random order)
  - Utils/SparseBitSet.cs - fixed size bit set, suitable for sparse data
  - Utils/StringUtils.cs - utilities for strings, some for rare use cases
+ - Utils/ZCurve.cs - interlacing two dimensions into Morton order
 
  - Json/JsonWriter.cs - simple API to write syntactically correct JSON
  - Json/JsonReader.cs - a low-level reader for JSON data

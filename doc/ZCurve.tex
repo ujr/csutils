@@ -1,0 +1,75 @@
+\input epsf
+\magnification\magstephalf
+\nopagenumbers
+\font\tf=cmr17
+\parindent=0pt
+\parskip=6pt plus 2pt minus 2pt
+\def\Z{\mathop{\rm Z}}%
+
+\topglue1pc
+\centerline{\tf Z Curve (Morton) Ordering}
+\bigskip
+\noindent
+Imagine a two-dimensional grid of cells, indexed by integer
+$x$ and $y$ coordinates. The cells are numbered in Z curve
+order, starting at the lower left corner with $\Z(x,y)=\Z(0,0)=0$
+(see figure). The virtue of the Z curve is good locality:
+it completes one quadrant before entering the next. Moreover,
+it is simple to compute Z values from $x,y$ coordinates and
+vice versa by bit interleaving.
+
+The grid's cells can be partitioned into blocks of 2 by 2 cells,
+and blocks can be recursively partitioned into larger blocks of
+2 by 2 smaller blocks. Cells are said to be blocks at level~0,
+blocks of 4 cells are at level~1, blocks of 16 cells at level~2,
+and so on up to the one block at level~32 that covers the entire
+grid. Blocks are identified by their level $n$ and their lower-left
+cell's Z value (see figure).
+
+\nobreak\bigskip
+\centerline{\epsfbox{ZCurve.1}}
+\medbreak
+\noindent
+The {\tt ZCurve} utility class provides operations related
+to the Z curve, using unsigned 32-bit integers for the
+$x$ and $y$ coordinates, and unsigned 64-bit integers
+for the interleaved Z values.
+
+$\hbox{\tt Encode}(x,y)$ encodes the $x$ and $y$ coordinates
+into a single Z value $z$ by bit interleaving in about
+30 bit-level operations (shift, and, or, xor).
+
+$\hbox{\tt DecodeX}(z)$ and $\hbox{\tt DecodeY}(z)$ retrieve
+the $x$ and $y$ coordinates from the Z value $z$, each
+in about 15 bit-level operations.
+
+$\hbox{\tt IsInsideBox}(z,lo,hi)$ tests if $z$ is within the box
+defined by $lo$ and $hi$; instead of decoding the Z values
+into x and y components, it masks off every other bit and
+compares the resulting 64-bit values.
+
+$\hbox{\tt NextInsideBox}(z,lo,hi)$ finds the least $z'>z$ that
+is inside the box defined by $lo$ and $hi$ using the algorithm
+described by Tropf and Herzog (``Multidimensional Range Search in
+Dynamically Balanced Trees,'' {\sl Angewandte Informatik}, 2/1981).
+For example, $\hbox{\tt NextInsideBox}(28,3,49)=33$.
+
+$\hbox{\tt LargestLevel}(z)$ is the largest block level starting
+at the given $z$ value; it is $\lfloor\hbox{NTZ}(z)/2\rfloor$
+where $\hbox{NTZ}$ is the number of trailing zero bits in $z$.
+Overloads find the largest block level starting at a given
+$z$ value and not extending beyond a given maximum Z value,
+and consider only a given subset of all levels $0\dots32$.
+For example, $\hbox{\tt LargestLevel}(0)=32$, but
+$\hbox{\tt LargestLevel}(0,49)=2$ and
+$\hbox{\tt LargestLevel}(0,49,[1,3])=1$.
+
+$\hbox{\tt GetQueryBlocks}(lo,hi,{\it levels})$ yields the
+shortest ordered sequence of blocks covering the whole box
+defined by min and max Z values $lo$ and $hi$. The idea is
+to use larger blocks inside the box and smaller blocks
+along the boundary of the box.
+If ${\it levels}$ are provided, only blocks at those levels
+are used; in this case, the blocks may extend beyond the box.
+
+\bye

@@ -1,12 +1,10 @@
 ﻿namespace Sylphe.Utils
 {
 	/// <summary>
-	/// Methods for bit shifting, bit counting, etc.,
-	/// exploiting the binary nature of the computer.
-	/// Many algorithms are taken and/or adapted from
-	/// the book Hacker's Delight by Henry S. Warren, Jr.
-	/// About the bit shifting operators in C#, see
-	/// https://msdn.microsoft.com/en-us/library/aa691377(v=vs.71).aspx
+	/// Methods for bit shifting, bit counting, etc., exploiting the
+	/// binary nature of the computer. Many algorithms here are taken
+	/// and/or adapted from "Hacker's Delight" by Henry S. Warren, Jr.
+	/// The C# Language Reference defines the bit shifting operators.
 	/// </summary>
 	public static class BitUtils
 	{
@@ -16,8 +14,8 @@
 		// Instead, C# does unsigned right shift on uint and ulong, but
 		// signed right shift (sign extension) on int and long.
 
-		// C# as well as Java use only the low order 5 (signed) or 6 (unsigned)
-		// bits of the shift count: x << n and x >> n shift by n&0x1F or n&0x3F
+		// C# as well as Java use only the low order 5 (int) or 6 (long)
+		// bits of the shift count: x << n and x >> n shift by n&31 or n&63
 		// bits to the left or right. This is different from C, where shifting
 		// by a value beyond the word size is explicitly undefined.
 
@@ -33,8 +31,11 @@
 
 		#endregion
 
+		#region Population count
+
 		// Population count algorithm for 32 bits is from Hacker's Delight.
 		// The variation for 64 bits is an adaptation of this algorithm.
+		// Population count is the number of one bits in the argument.
 
 		public static int PopulationCount(int value)
 		{
@@ -66,6 +67,10 @@
 			x = x + (x >> 32);
 			return ((int) x) & 0x7F;
 		}
+
+		#endregion
+
+		#region Leading and trailing zeros
 
 		// Number of leading and trailing zeros:
 		// Easy using PopulationCount, but other
@@ -132,6 +137,14 @@
 			x = x | (x << 32);
 			return PopulationCount(~x);
 		}
+
+		#endregion
+
+		#region Power of two: test, floor, ceiling
+
+		// A power of 2 has a population count of 1.
+		// The methods here test if an integer is a power of two,
+		// and round up (ceiling) or down (floor) to a power of two.
 
 		public static bool IsPowerOfTwo(int x)
 		{
@@ -216,6 +229,8 @@
 			x |= (x >> 32);
 			return x - (x >> 1);
 		}
+
+		#endregion
 
 		public static string ToString(int x, bool tight = false)
 		{

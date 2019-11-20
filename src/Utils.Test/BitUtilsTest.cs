@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Sylphe.Utils.Test
@@ -112,71 +111,79 @@ namespace Sylphe.Utils.Test
 		}
 
 		[Fact]
-		public void PowerOfTwoFloorCeiling32Test()
+		public void PowerOfTwoCeiling32Test()
 		{
-			const int value = 200;
-			int ceiling = BitUtils.PowerOfTwoCeiling(value);
-			Console.WriteLine(@"PowerOfTwoCeiling({0}) = {1}", value, ceiling);
+			const int argument = 200;
+			const int expected = 256;
+			Assert.Equal(expected, BitUtils.PowerOfTwoCeiling(argument));
 
-			Assert.Equal(0, BitUtils.PowerOfTwoFloor(0));
 			Assert.Equal(0, BitUtils.PowerOfTwoCeiling(0));
-
-			Assert.Equal(1, BitUtils.PowerOfTwoFloor(1));
 			Assert.Equal(1, BitUtils.PowerOfTwoCeiling(1));
-
-			Assert.Equal(2, BitUtils.PowerOfTwoFloor(2));
 			Assert.Equal(2, BitUtils.PowerOfTwoCeiling(2));
-
-			Assert.Equal(2, BitUtils.PowerOfTwoFloor(3));
 			Assert.Equal(4, BitUtils.PowerOfTwoCeiling(3));
-
-			Assert.Equal(4, BitUtils.PowerOfTwoFloor(4));
 			Assert.Equal(4, BitUtils.PowerOfTwoCeiling(4));
-
-			Assert.Equal(4, BitUtils.PowerOfTwoFloor(5));
 			Assert.Equal(8, BitUtils.PowerOfTwoCeiling(5));
 
-			// Careful to use UInt32 literals in tests below:
-
-			Assert.Equal(1U << 30, BitUtils.PowerOfTwoFloor((1U << 31) - 1)); // 2**31 - 1
-			Assert.Equal(1U << 31, BitUtils.PowerOfTwoCeiling((1U << 31) - 1));
-
-			Assert.Equal(1U << 31, BitUtils.PowerOfTwoFloor(1U << 31)); // 2**31
-			Assert.Equal(1U << 31, BitUtils.PowerOfTwoCeiling(1U << 31));
-
-			Assert.Equal(1U << 31, BitUtils.PowerOfTwoFloor((1U << 31) + 1)); // 2**31 + 1
-			Assert.Equal(0U, BitUtils.PowerOfTwoCeiling((1U << 31) + 1));
-
-			Assert.Equal(1U<<31, BitUtils.PowerOfTwoFloor(uint.MaxValue)); // 2**32 - 1
+			// Use UInt32 literals in tests below!
+			Assert.Equal(1U << 31, BitUtils.PowerOfTwoCeiling((1U << 31) - 1)); // 2**31-1
+			Assert.Equal(1U << 31, BitUtils.PowerOfTwoCeiling(1U << 31)); // 2**31
+			Assert.Equal(0U, BitUtils.PowerOfTwoCeiling((1U << 31) + 1)); // 2**31+1
 			Assert.Equal(0U, BitUtils.PowerOfTwoCeiling(uint.MaxValue)); // (mod 2**32)
 		}
 
 		[Fact]
-		public void PowerOfTwoFloorCeiling64Test()
+		public void PowerOfTwoCeiling64Test()
 		{
-			const long value = 0xc9a1d677466b7ba;
-			long floor = BitUtils.PowerOfTwoFloor(value);
-			Console.WriteLine(@"PowerOfTwoFloor(0x{0:X}) = 0x{1:X}", value, floor);
+			const long argument = 0xc9a1d677466b7ba;
+			const long expected = 0x1000000000000000;
+			Assert.Equal(expected, BitUtils.PowerOfTwoCeiling(argument));
 
-			Assert.Equal(0, BitUtils.PowerOfTwoFloor(0L));
 			Assert.Equal(0, BitUtils.PowerOfTwoCeiling(0L));
-
-			Assert.Equal(4, BitUtils.PowerOfTwoFloor(5L));
 			Assert.Equal(8, BitUtils.PowerOfTwoCeiling(5L));
 
-			// Careful! Use the UL literals, otherwise AreEquals converts to decimal:
-
-			Assert.Equal(1UL<<62, BitUtils.PowerOfTwoFloor((1UL << 63) - 1)); // 2**63-1
-			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoCeiling((1UL << 63) - 1));
-
-			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoFloor(1UL << 63)); // 2**63
-			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoCeiling(1UL << 63));
-
-			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoFloor((1UL << 63) + 1)); // 2**63+1
-			Assert.Equal(0UL, BitUtils.PowerOfTwoCeiling((1UL << 63) + 1));
-
-			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoFloor(ulong.MaxValue)); // 2**64 - 1
+			// Use UInt64 literals in tests below!
+			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoCeiling((1UL << 63) - 1)); // 2**63-1
+			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoCeiling(1UL << 63)); // 2**63
+			Assert.Equal(0UL, BitUtils.PowerOfTwoCeiling((1UL << 63) + 1)); // 2**63+1
 			Assert.Equal(0UL, BitUtils.PowerOfTwoCeiling(ulong.MaxValue)); // (mod 2**64)
+		}
+
+		[Fact]
+		public void PowerOfTwoFloor32Test()
+		{
+			const int argument = 200;
+			const int expected = 128;
+			Assert.Equal(expected, BitUtils.PowerOfTwoFloor(argument));
+
+			Assert.Equal(0, BitUtils.PowerOfTwoFloor(0));
+			Assert.Equal(1, BitUtils.PowerOfTwoFloor(1));
+			Assert.Equal(2, BitUtils.PowerOfTwoFloor(2));
+			Assert.Equal(2, BitUtils.PowerOfTwoFloor(3));
+			Assert.Equal(4, BitUtils.PowerOfTwoFloor(4));
+			Assert.Equal(4, BitUtils.PowerOfTwoFloor(5));
+
+			// Use UInt32 literals in tests below!
+			Assert.Equal(1U << 30, BitUtils.PowerOfTwoFloor((1U << 31) - 1)); // 2**31-1
+			Assert.Equal(1U << 31, BitUtils.PowerOfTwoFloor(1U << 31)); // 2**31
+			Assert.Equal(1U << 31, BitUtils.PowerOfTwoFloor((1U << 31) + 1)); // 2**31+1
+			Assert.Equal(1U<<31, BitUtils.PowerOfTwoFloor(uint.MaxValue)); // 2**32-1
+		}
+
+		[Fact]
+		public void PowerOfTwoFloor64Test()
+		{
+			const long argument = 0xc9a1d677466b7ba;
+			const long expected = 0x800000000000000;
+			Assert.Equal(expected, BitUtils.PowerOfTwoFloor(argument));
+
+			Assert.Equal(0, BitUtils.PowerOfTwoFloor(0L));
+			Assert.Equal(4, BitUtils.PowerOfTwoFloor(5L));
+
+			// Use UInt64 literals in tests below!
+			Assert.Equal(1UL<<62, BitUtils.PowerOfTwoFloor((1UL << 63) - 1)); // 2**63-1
+			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoFloor(1UL << 63)); // 2**63
+			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoFloor((1UL << 63) + 1)); // 2**63+1
+			Assert.Equal(1UL<<63, BitUtils.PowerOfTwoFloor(ulong.MaxValue)); // 2**64-1
 		}
 
 		[Fact]
