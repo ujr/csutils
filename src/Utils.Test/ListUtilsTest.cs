@@ -277,11 +277,13 @@ namespace Sylphe.Utils.Test
 			Assert.Equal(MakeArray(2, 3, 3, 5, 7, 9), list);
 		}
 
-		[Fact(Skip="experimental")]
-		public void SortPerformanceComparison()
+		[Fact]
+		public void SortPerformanceTest()
 		{
 			const int repeatCount = 1000;
 			const int listSize = 1000;
+			var maxTime = TimeSpan.FromSeconds(1.0);
+
 			var random = new Random();
 			IList<int> source = new List<int>(listSize);
 			for (int i = 0; i < listSize; i++)
@@ -310,6 +312,9 @@ namespace Sylphe.Utils.Test
 			TimeSpan elementTime = DateTime.Now - startTime;
 			_output.WriteLine(@"Sorting {0} times {1} ints using CompareElement: {2}",
 							  repeatCount, temp.Length, elementTime);
+
+			Assert.True(indexedTime < maxTime, "sort too slow");
+			Assert.True(elementTime < maxTime, "sort too slow");
 		}
 
 		private static T[] MakeArray<T>(params T[] args)

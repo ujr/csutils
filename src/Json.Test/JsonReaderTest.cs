@@ -148,36 +148,37 @@ namespace Sylphe.Json.Test
 			Assert.Throws<JsonException>(() => ReadAll("{\"a\":[}"));
 		}
 
-		[Fact(Skip="debugging")]
-		public void DumpSamples()
+		[Fact]
+		public void CanReadSamples()
 		{
-			JsonReadDump("\"abc\\tdef\"");
-
-			JsonReadDump("[]");
-			JsonReadDump("  [  ]  ");
-			JsonReadDump("[99]");
-			JsonReadDump("[1,\"two\", null, false, true]");
-			JsonReadDump("[1,[2,[[4]]]]");
-
-			JsonReadDump("{}");
-			JsonReadDump("{\"num\":123}");
-			JsonReadDump("{\"foo\":\"bar\"}");
-			JsonReadDump("{\"foo\":\"bar\",\"num\":123}");
-			JsonReadDump("{\"foo\":{\"bar\":{\"baz\":{\"quux\":[42]}}}}");
-
-			JsonReadDump("{\"loc\":[12,23],\"sref\":{\"wkid\":4326}}");
+			var r1 = new JsonReader("{\"loc\":[12,23],\"sref\":{\"wkid\":4326}}");
+			AssertRead(r1, 1, JsonType.Object, null, 0, null, JsonType.Object);
+			AssertRead(r1, 2, JsonType.Array, null, 0, "loc", JsonType.Array);
+			AssertRead(r1, 2, JsonType.Number, 12, 0, null, JsonType.Array);
+			AssertRead(r1, 2, JsonType.Number, 23, 1, null, JsonType.Array);
+			AssertRead(r1, 1, JsonType.Closed, null, 0, "loc", JsonType.Object);
+			AssertRead(r1, 2, JsonType.Object, null, 0, "sref", JsonType.Object);
+			AssertRead(r1, 2, JsonType.Number, 4326, 0, "wkid", JsonType.Object);
+			AssertRead(r1, 1, JsonType.Closed, null, 1, "sref", JsonType.Object);
+			AssertRead(r1, 0, JsonType.Closed, null, 0, null, JsonType.None);
+			AssertReadEnd(r1);
 		}
 
-		[Fact(Skip="experimental")]
+		[Fact]
 		public void JsonParseTrial()
 		{
 			const string json =
 				@"{""foo"":{""bar"":22,""baz"":333}, " +
 				@"""quux"":[{""text"":""42"",""pt"":{""x"":123.4,""y"":567.8}}]}";
-			//const string json = @"{""foo"":1, ""bar"":2, ""baz"":3}";
-			//const string json = @"[1, false, ""zero"", {}]";
 
-			// $.foo.bar, $.foo.baz, $.quux[0].text, $.quux[0].pt.x, $.quux[0].pt.y
+			var expected = new StringBuilder();
+			expected.AppendLine("$.foo.bar = 22");
+			expected.AppendLine("$.foo.baz = 333");
+			expected.AppendLine("$.quux[0].text = 42");
+			expected.AppendLine("$.quux[0].pt.x = 123.4");
+			expected.AppendLine("$.quux[0].pt.y = 567.8");
+
+			var result = new StringBuilder();
 
 			var reader = new JsonReader(json);
 			var stack = new Stack<object>();
@@ -196,39 +197,28 @@ namespace Sylphe.Json.Test
 				else
 				{
 					stack.Push((object) reader.Label ?? reader.Index);
-					DumpStack(stack, $" = {reader.Value}");
+					EmitPathAndValue(stack, reader.Value, result);
 					stack.Pop();
 				}
 			}
+
+			Assert.Equal(expected.ToString(), result.ToString());
 		}
 
 		#region Utils
 
-		private void DumpStack<T>(Stack<T> stack, string suffix)
+		private void EmitPathAndValue<T>(Stack<T> stack, object value, StringBuilder sb)
 		{
-			var sb = new StringBuilder("$");
+			sb.Append("$");
 			foreach (var item in stack.Reverse().Skip(1))
 			{
 				if (item is string)
-					sb.Append($@".{item}");
+					sb.AppendFormat(".{0}", item);
 				else if (item is int)
-					sb.Append($@"[{item}]");
+					sb.AppendFormat("[{0}]", item);
 			}
-			sb.Append(suffix);
-			_output.WriteLine(sb.ToString());
-		}
-
-		private void JsonReadDump(string json)
-		{
-			_output.WriteLine(@">>> {0}$", json);
-			var reader = new JsonReader(json);
-
-			while (reader.Read())
-			{
-				_output.WriteLine(@"Type={0,-8} Value={1,-6} Index={2,-3} Label={3,-6} Depth={4,-2} Context={5}",
-					reader.Type, reader.Value, reader.Index, reader.Label, reader.Depth, reader.Context);
-			}
-			_output.WriteLine("");
+			sb.AppendFormat(" = {0}", value);
+			sb.AppendLine();
 		}
 
 		private static void ReadAll(string json)
@@ -241,7 +231,7 @@ namespace Sylphe.Json.Test
 			JsonReader reader, int depth, JsonType type, object value,
 			int index, string label, JsonType context)
 		{
-			Assert.True(reader.Read()); // too little JSON input
+			Assert.True(reader.Read()); // or too little JSON input
 
 			if (reader.Value is double && value is int)
 			{
@@ -259,7 +249,7 @@ namespace Sylphe.Json.Test
 
 		private static void AssertReadEnd(JsonReader reader)
 		{
-			Assert.False(reader.Read()); // too much JSON input
+			Assert.False(reader.Read()); // or too much JSON input
 		}
 
 		#endregion
