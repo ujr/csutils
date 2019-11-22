@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Sylphe.Utils
@@ -109,6 +110,46 @@ namespace Sylphe.Utils
 			}
 
 			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Remove diacritical marks from the given <paramref name="text"/>
+		/// and return the result. French accents and German umlauts work well,
+		/// but surprises exist; e.g. "łŁ" remains unchanged.
+		/// </summary>
+		/// <remarks>
+		/// About removing diacritical marks, see
+		/// https://docs.microsoft.com/en-us/dotnet/api/system.string.normalize and
+		/// http://stackoverflow.com/questions/3769457/how-can-i-remove-accents-on-a-string
+		/// </remarks>
+		public static string RemoveDiacritics(this string text, StringBuilder buffer = null)
+		{
+			if (string.IsNullOrEmpty(text))
+			{
+				return text;
+			}
+
+			text = text.Normalize(NormalizationForm.FormD);
+
+			if (buffer == null)
+			{
+				buffer = new StringBuilder();
+			}
+			else
+			{
+				buffer.Clear();
+			}
+
+			foreach (char c in text)
+			{
+				var category = char.GetUnicodeCategory(c);
+				if (category != UnicodeCategory.NonSpacingMark)
+				{
+					buffer.Append(c);
+				}
+			}
+
+			return buffer.ToString();
 		}
 
 		/// <summary>

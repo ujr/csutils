@@ -56,6 +56,18 @@ namespace Sylphe.Utils.Test
 		}
 
 		[Fact]
+		public void CanRemoveDiacritics()
+		{
+			Assert.Null(StringUtils.RemoveDiacritics(null));
+			Assert.Empty(StringUtils.RemoveDiacritics(string.Empty));
+
+			Assert.Equal("aouAOUß", StringUtils.RemoveDiacritics("äöüÄÖÜß"));
+			Assert.Equal("aaceeei", StringUtils.RemoveDiacritics("àâçéèêï"));
+
+			Assert.Equal("łŁ", StringUtils.RemoveDiacritics("łŁ")); // sic
+		}
+
+		[Fact]
 		public void CanCommonPrefixLength()
 		{
 			Assert.Equal(0, StringUtils.CommonPrefixLength(null, null));
