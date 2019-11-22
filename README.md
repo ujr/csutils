@@ -16,6 +16,7 @@ Utilities
 ---------
 
  - Utils/BitUtils.cs - bit query and manipulation methods
+ - Utils/CappedQueue.cs - a queue (first-in-first-out) of limited capacity
  - Utils/ListUtils.cs - some `List<T>` methods but for `IList<T>`
  - Utils/Parsing.cs - parsing text strings (mostly lexical scanning)
  - Utils/PriorityQueue.cs - base class for a heap-based priority queue
