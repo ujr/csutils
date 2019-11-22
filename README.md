@@ -28,7 +28,23 @@ Utilities
  - Utils/Variants.cs - expand variant notation, e.g. `ba[r|z]` to bar and baz
  - Utils/ZCurve.cs - interlacing two dimensions into Morton order
 
+JSON
+
  - Json/JsonWriter.cs - simple API to write syntactically correct JSON
  - Json/JsonReader.cs - a low-level reader for JSON data
  - Json/JsonException.cs - used by JsonReader (but not by JsonWriter)
  - Json/Json.cs - minimalistic JSON serialization and hydratisation (dynamics)
+
+
+Documentation
+-------------
+
+Where available, read the XML comments in the code,
+and see the unit tests. 
+
+There are some [general notes](/doc/Notes.md) about tools and concepts,
+and details about some of the utility classes:
+
+ - [BitUtils.md](/doc/BitUtils.md)
+ - [SparseBitSet.pdf](/doc/SparseBitSet.pdf)
+ - [ZCurve.pdf](/doc/ZCurve.pdf)

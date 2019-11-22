@@ -27,6 +27,7 @@ Concepts & Guides
 
 **.NET Core** is documented in Microsoft's [.NET Core Guide][core], 
 which includes sources for download of the SDK and the runtime.
+There are also [related guides][dotnet] for C#, Xamarin, etc.
 
 The .NET Core Guide has a useful section about 
 [**Unit Testing** Best Practices](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices).
@@ -53,5 +54,6 @@ and [unlicense.org](https://unlicense.org/).
 [xunit]: https://xunit.net/
 [edconf]: https://editorconfig.org/
 
+[dotnet]: https://docs.microsoft.com/en-us/dotnet/
 [core]: https://docs.microsoft.com/en-us/dotnet/core/
 [json]: https://json.org/
