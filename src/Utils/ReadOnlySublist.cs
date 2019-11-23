@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace Sylphe.Utils
 {
-	public class Bar {}
 	public class ReadOnlySublist<T> : IList<T>
 	{
 		private readonly IList<T> _baseList;

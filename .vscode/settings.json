@@ -1,2 +1,7 @@
 {
+    "markdownlint.config": {
+        "ul-start-left": false,
+        "ul-indent": false,
+        "no-multiple-blanks": false
+    }
 }
