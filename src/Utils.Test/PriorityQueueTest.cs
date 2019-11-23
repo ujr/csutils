@@ -514,8 +514,8 @@ namespace Sylphe.Utils.Test
 			_output.WriteLine(@"Capacity=unbounded Count={0:N0} Add/Pop Elapsed={1}",
 				count, elapsed2);
 
-			Assert.True(elapsed1 < TimeSpan.FromSeconds(1), "Too slow");
-			Assert.True(elapsed2 < TimeSpan.FromSeconds(12), "Too slow");
+			Assert.True(elapsed1 < TimeSpan.FromSeconds(2), "Too slow");
+			Assert.True(elapsed2 < TimeSpan.FromSeconds(20), "Too slow");
 		}
 
 		#region Test Utilities

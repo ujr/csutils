@@ -16,9 +16,9 @@ namespace Sylphe.Utils.Test
 		}
 
 		[Theory]
-		[InlineData(100*1000*1000, 1.0)]
-		[InlineData(int.MaxValue, 20.0)]
-		public void LargeSetTest(int length, double maxAllowedSecs)
+		[InlineData(100*1000*1000, 2.0)]
+		[InlineData(int.MaxValue, 25.0)]
+		public void PerformanceTest(int length, double maxAllowedSecs)
 		{
 			const int seed = 1234;
 			var startTime = DateTime.Now;
@@ -52,7 +52,7 @@ namespace Sylphe.Utils.Test
 				length, count, elapsed);
 
 			Assert.Equal(0, largeSet.Cardinality);
-			Assert.True(elapsed < TimeSpan.FromSeconds(maxAllowedSecs));
+			Assert.True(elapsed < TimeSpan.FromSeconds(maxAllowedSecs), "Too slow");
 		}
 
 		[Fact]
