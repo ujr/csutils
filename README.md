@@ -6,7 +6,7 @@ A small collection of C# utility methods and classes.
 Intended for selective copy/paste rather than assembly reference.
 
 The code here is set up as a few .NET Core projects with unit tests,
-so that it can be verified by building it and running the test suite.
+so that it can be built and verified by running the test suite.
 
 >
     git clone https://github.com/ujr/csutils
@@ -24,13 +24,14 @@ Utils
  - [BitUtils.cs](src/Utils/BitUtils.cs) - bit query and manipulation methods
  - [CappedQueue.cs](src/Utils/CappedQueue.cs) - a queue (first-in-first-out) of limited capacity
  - [ListUtils.cs](src/Utils/ListUtils.cs) - some `List<T>` methods but for `IList<T>`
- - [Parsing.cs](src/Utils/Parsing.cs) - parsing text strings (mostly lexical scanning)
+ - [Parsing.cs](src/Utils/Parsing.cs) - parsing text strings (see also: Tokenizer)
  - [PriorityQueue.cs](src/Utils/PriorityQueue.cs) - base class for a heap-based priority queue
  - [ReadOnlySublist.cs](src/Utils/ReadOnlySublist.cs) - read-only view on a subrange of an `IList<T>`
  - [Reservoir.cs](src/Utils/Reservoir.cs) - reservoir sampling (*k* random items from an `IEnumerable`)
  - [Shuffle.cs](src/Utils/Shuffle.cs) - shuffling an `IList<T>` (rearrange in random order)
  - [SparseBitSet.cs](src/Utils/SparseBitSet.cs) - fixed size bit set, suitable for sparse data
  - [StringUtils.cs](src/Utils/StringUtils.cs) - utilities for strings, some for rare use cases
+ - [Tokenizer.cs](src/Utils/Tokenizer.cs) - separate a text into Name/Number/String/Operator tokens
  - [Variants.cs](src/Utils/Variants.cs) - expand variant notation, e.g. `ba[r|z]` to bar and baz
  - [ZCurve.cs](src/Utils/ZCurve.cs) - interlacing two dimensions into Morton order
 
