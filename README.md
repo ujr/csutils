@@ -8,7 +8,6 @@ Intended for selective copy/paste rather than assembly reference.
 The code here is set up as a few .NET Core projects with unit tests,
 so that it can be built and verified by running the test suite.
 
->
     git clone https://github.com/ujr/csutils
     cd csutils/src
     dotnet restore
@@ -25,6 +24,7 @@ Utils
  - [CappedQueue.cs](src/Utils/CappedQueue.cs) - a queue (first-in-first-out) of limited capacity
  - [ListUtils.cs](src/Utils/ListUtils.cs) - some `List<T>` methods but for `IList<T>`
  - [Parsing.cs](src/Utils/Parsing.cs) - parsing text strings (see also: Tokenizer)
+ - [Point](src/Utils.Point.cs) and [Envelope](src/Utils/Envelope.cs) - immutable (x,y) and (x0,y0,x1,y1)
  - [PriorityQueue.cs](src/Utils/PriorityQueue.cs) - base class for a heap-based priority queue
  - [ReadOnlySublist.cs](src/Utils/ReadOnlySublist.cs) - read-only view on a subrange of an `IList<T>`
  - [Reservoir.cs](src/Utils/Reservoir.cs) - reservoir sampling (*k* random items from an `IEnumerable`)
