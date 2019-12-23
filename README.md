@@ -43,6 +43,17 @@ JSON
  - [JsonException.cs](src/Json/JsonException.cs) - used by JsonReader (but not by JsonWriter)
  - [Json.cs](src/Json/Json.cs) - minimalistic JSON serialization and hydratisation (dynamics)
 
+CDB
+
+A port of the [Constant Database](http://cr.yp.to/cdb.html) (CDB) to C#.
+A CDB is an on-disk associative array, mapping byte strings to byte strings,
+with maximum performance and minimum overhead. See [CDB.md](/doc/CDB.md).
+The CDB code here is dedicated to the public domain (as is the original).
+
+ - [Cdb.cs](src/Cdb/Cdb.cs) - static accessors: Get, Open, Make, Dump
+ - [CdbFile.cs](src/Cdb/CdbFile.cs) - reading a constant database
+ - [CdbMake.cs](src/Cdb/CdbMake.cs) - creating a constant database
+
 
 Documentation
 -------------
