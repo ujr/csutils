@@ -9,7 +9,7 @@ namespace Sylphe.Utils
 	/// Token types: Name, String, Number, Operator, End (of input).
 	/// Operators always use ordinal, names the given string comparison.
 	/// </summary>
-	public class Tokenizer /* 2013 */
+	public class Tokenizer
 	{
 		private readonly string _text;
 		private readonly StringBuilder _buffer;

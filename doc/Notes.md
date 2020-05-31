@@ -103,7 +103,19 @@ is managed with the following commands:
 For further capabilities of the CLI, refer to the .NET Core Guide.
 
 
+History
+-------
+
+Cdb port circa 2010,
+ListUtils since 2012,
+PointQuadtree since 2010,
+PriorityQueue since 2012,
+Tokenizer since 2013,
+Variants circa 2017.
+
+
 [vscode]: https://code.visualstudio.com/
+[csext]: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
 [xunit]: https://xunit.net/
 [edconf]: https://editorconfig.org/
 
