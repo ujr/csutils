@@ -22,13 +22,15 @@ Utils
 
  - [BitUtils.cs](src/Utils/BitUtils.cs) - bit query and manipulation methods
  - [CappedQueue.cs](src/Utils/CappedQueue.cs) - a queue (first-in-first-out) of limited capacity
+ - [Geodesy.cs](src/Utils/Geodesy.cs) - simple geodetic calculations like haversine distance
  - [ListUtils.cs](src/Utils/ListUtils.cs) - some `List<T>` methods but for `IList<T>`
  - [Parsing.cs](src/Utils/Parsing.cs) - parsing text strings (see also: Tokenizer)
- - [Point](src/Utils.Point.cs) and [Envelope](src/Utils/Envelope.cs) - immutable (x,y) and (x0,y0,x1,y1)
+ - [Point](src/Utils/Point.cs) and [Envelope](src/Utils/Envelope.cs) - immutable (x,y) and (x0,y0,x1,y1)
  - [PointQuadtree.cs](src/Utils/PointQuadtree.cs) - a point quadtree (2D index structure)
  - [PriorityQueue.cs](src/Utils/PriorityQueue.cs) - base class for a heap-based priority queue
  - [ReadOnlySublist.cs](src/Utils/ReadOnlySublist.cs) - read-only view on a subrange of an `IList<T>`
  - [Reservoir.cs](src/Utils/Reservoir.cs) - reservoir sampling (*k* random items from an `IEnumerable`)
+ - [RichTextBuilder.cs](src/Utils/RichTextBuilder.cs) - writing to rich text format (RTF)
  - [Shuffle.cs](src/Utils/Shuffle.cs) - shuffling an `IList<T>` (rearrange in random order)
  - [SparseBitSet.cs](src/Utils/SparseBitSet.cs) - fixed size bit set, suitable for sparse data
  - [StringUtils.cs](src/Utils/StringUtils.cs) - utilities for strings, some for rare use cases
