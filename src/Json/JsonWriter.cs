@@ -44,7 +44,6 @@ namespace Sylphe.Json
 
 			if (!string.IsNullOrEmpty(jsonpFunctionName))
 			{
-				// TODO Validate function name?
 				_writer.Write(jsonpFunctionName);
 				_writer.Write("(");
 			}
@@ -87,14 +86,6 @@ namespace Sylphe.Json
 			_writer.Write(value ? "true" : "false");
 		}
 
-		public void WriteValue(int value)
-		{
-			CheckDisposed();
-			WriteSeparator();
-			string json = value.ToString(_invariant);
-			_writer.Write(json);
-		}
-
 		public void WriteValue(long value)
 		{
 			CheckDisposed();
@@ -103,11 +94,11 @@ namespace Sylphe.Json
 			_writer.Write(json);
 		}
 
-		public void WriteValue(double value)
+		public void WriteValue(double value, int significantDigits = 0)
 		{
 			CheckDisposed();
 			WriteSeparator();
-			WriteDouble(value);
+			WriteJsonNumber(value, significantDigits);
 		}
 
 		public void WriteValue(decimal value)
@@ -118,7 +109,7 @@ namespace Sylphe.Json
 			_writer.Write(json);
 		}
 
-		public void WriteValue(string value)
+		public void WriteValue(IEnumerable<char> value)
 		{
 			CheckDisposed();
 			WriteSeparator();
@@ -171,15 +162,6 @@ namespace Sylphe.Json
 			_writer.Write(value ? "true" : "false");
 		}
 
-		public void WriteProperty(string name, int value)
-		{
-			CheckDisposed();
-			WriteSeparator();
-			WriteJsonString(name, true);
-			_writer.Write(':');
-			_writer.Write(value.ToString(_invariant));
-		}
-
 		public void WriteProperty(string name, long value)
 		{
 			CheckDisposed();
@@ -189,16 +171,16 @@ namespace Sylphe.Json
 			_writer.Write(value.ToString(_invariant));
 		}
 
-		public void WriteProperty(string name, double value)
+		public void WriteProperty(string name, double value, int significantDigits = 0)
 		{
 			CheckDisposed();
 			WriteSeparator();
 			WriteJsonString(name, true);
 			_writer.Write(':');
-			WriteDouble(value);
+			WriteJsonNumber(value, significantDigits);
 		}
 
-		public void WriteProperty(string name, string value)
+		public void WriteProperty(string name, IEnumerable<char> value)
 		{
 			CheckDisposed();
 			WriteSeparator();
@@ -257,24 +239,6 @@ namespace Sylphe.Json
 			}
 		}
 
-		private void WriteDouble(double value)
-		{
-			if (double.IsNaN(value) || double.IsInfinity(value))
-			{
-				// By JSON specification (ECMA-404), "numeric values that cannot
-				// be represented as sequences of digits (such as Infinity and NaN)
-				// are not permitted". In accordance with many other references,
-				// here we serialize these values as null.
-
-				_writer.Write("null");
-			}
-			else
-			{
-				string json = value.ToString(_invariant);
-				_writer.Write(json);
-			}
-		}
-
 		private void WriteSeparator()
 		{
 			if (_gotPropertyName)
@@ -304,6 +268,27 @@ namespace Sylphe.Json
 				}
 			}
 		}
+
+		private void WriteJsonNumber(double value, int significantDigits = 0)
+		{
+			if (double.IsNaN(value) || double.IsInfinity(value))
+			{
+				_writer.Write("null"); // see http://www.json.org/json.ppt
+			}
+			else if (0 < significantDigits && significantDigits < 17)
+			{
+				var format = Formats[significantDigits];
+				_writer.Write(value.ToString(format, _invariant));
+			}
+			else
+			{
+				_writer.Write(value.ToString(_invariant));
+			}
+		}
+
+		private static readonly string[] Formats = {
+			"g0", "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9", "g10", "g11", "g12", "g13", "g14", "g15", "g16"
+		};
 
 		private void WriteJsonString(IEnumerable<char> value, bool includeDelimiters)
 		{

@@ -64,6 +64,28 @@ namespace Sylphe.Json.Test
 		}
 
 		[Fact]
+		public void JsonWriter_CanSignificantDigits()
+		{
+			var buffer = new StringBuilder();
+			var writer = new StringWriter(buffer);
+			var json = new JsonWriter(writer);
+
+			const double value = 12345.67890;
+			json.WriteStartArray();
+			for (int i = 0; i < 11; i++)
+			{
+				json.WriteValue(value, i);
+			}
+			json.WriteEndArray();
+
+			json.Flush();
+
+			const string expected = "[12345.6789,1e+04,1.2e+04,1.23e+04,1.235e+04,12346,12345.7,12345.68,12345.679,12345.6789,12345.6789]";
+			string actual = buffer.ToString();
+			Assert.Equal(expected, actual);
+		}
+
+		[Fact]
 		public void JsonWriter_CanNanAndInf()
 		{
 			var buffer = new StringBuilder();

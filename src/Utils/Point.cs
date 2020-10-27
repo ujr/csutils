@@ -23,7 +23,7 @@ namespace Sylphe.Utils
 
 		public bool Equals(Point other)
 		{
-			if (ReferenceEquals(other, null)) return false;
+			if (other is null) return false;
 			if (ReferenceEquals(other, this)) return true;
 
 			if (IsEmpty && other.IsEmpty)

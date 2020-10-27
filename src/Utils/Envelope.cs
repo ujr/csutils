@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Sylphe.Utils
 {
@@ -57,6 +58,38 @@ namespace Sylphe.Utils
 			YMax = envelope.YMax;
 		}
 
+		/// <summary>
+		/// Create an envelope that is the bounding box around the
+		/// given sequence of points (empty if no points).
+		/// This is typically at least 5 times faster than repeated
+		/// <c>bbox = bbox.Expand(point)</c> calls.
+		/// </summary>
+		public static Envelope Create(IEnumerable<Point> points)
+		{
+			if (points == null) return Empty;
+
+			double xmin = double.MaxValue, ymin = double.MaxValue;
+			double xmax = double.MinValue, ymax = double.MinValue;
+			long count = 0;
+
+			foreach (var point in points)
+			{
+				if (point == null) continue;
+
+				if (point.X < xmin) xmin = point.X;
+				if (point.X > xmax) xmax = point.X;
+
+				if (point.Y < ymin) ymin = point.Y;
+				if (point.Y > ymax) ymax = point.Y;
+
+				count += 1;
+			}
+
+			return count > 0 ? new Envelope(xmin, ymin, xmax, ymax) : Empty;
+		}
+
+		public static Envelope Empty { get; } = new Envelope();
+
 		#endregion
 
 		public double XMin { get; }
@@ -72,8 +105,6 @@ namespace Sylphe.Utils
 		/// is considered to contain the the point (x,y) and only this point.
 		/// </remarks>
 		public bool IsEmpty => XMin > XMax || YMin > YMax;
-
-		public static Envelope Empty { get; } = new Envelope();
 
 		#region Containment
 
@@ -204,7 +235,7 @@ namespace Sylphe.Utils
 
 		public bool Equals(Envelope other)
 		{
-			if (ReferenceEquals(null, other)) return false;
+			if (other is null) return false;
 			if (ReferenceEquals(this, other)) return true;
 
 			if (IsEmpty)
@@ -218,11 +249,9 @@ namespace Sylphe.Utils
 
 		public override bool Equals(object obj)
 		{
-			if (ReferenceEquals(null, obj)) return false;
+			if (obj is null) return false;
 			if (ReferenceEquals(this, obj)) return true;
-
 			if (obj.GetType() != typeof(Envelope)) return false;
-
 			return Equals((Envelope) obj);
 		}
 
