@@ -17,7 +17,7 @@ namespace Sylphe.Utils.Test
 
 		[Theory]
 		[InlineData(100*1000*1000, 2.0)]
-		[InlineData(int.MaxValue, 25.0)]
+		[InlineData(int.MaxValue, 30.0)]
 		public void PerformanceTest(int length, double maxAllowedSecs)
 		{
 			const int seed = 1234;

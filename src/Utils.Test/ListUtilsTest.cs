@@ -282,7 +282,7 @@ namespace Sylphe.Utils.Test
 		{
 			const int repeatCount = 1000;
 			const int listSize = 1000;
-			var maxTime = TimeSpan.FromSeconds(1.0);
+			var maxTime = TimeSpan.FromSeconds(1.5);
 
 			var random = new Random();
 			IList<int> source = new List<int>(listSize);
