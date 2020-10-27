@@ -146,6 +146,54 @@ namespace Sylphe.Utils.Test
 		}
 
 		[Fact]
+		public void CanQueryNearGeo()
+		{
+			var qt = GetGlobalDataset();
+
+			var paris = new Point(2.347, 48.854); // close to Notre Dame
+			var gambell = new Point(-171.728, 63.780); // on St Lawrence Island
+			const double km = 1000;
+
+			var r1 = new List<Place>();
+			qt.QueryGeo(paris, 500, 10, null, r1);
+			Assert.Equal(Seq(NotreDameTourNord, NotreDameTourSud), r1);
+
+			var r2 = new List<Place>();
+			qt.QueryGeo(paris, 5000, 10, null, r2);
+			Assert.Equal(Seq(NotreDameTourNord, NotreDameTourSud, EiffelTower), r2);
+
+			var r3 = new List<Place>();
+			qt.QueryGeo(gambell, 400 * km, 10, null, r3);
+			Assert.Equal(Seq(StMatthewIsland), r3);
+
+			var r4 = new List<Place>();
+			qt.QueryGeo(gambell, 600 * km, 10, null, r4); // across 180 meridian, but not across pole
+			Assert.Equal(Seq(StMatthewIsland, Anadyr), r4);
+
+			var r5 = new List<Place>();
+			qt.QueryGeo(gambell, 3000 * km, 10, null, r5); // across pole, Longyearbyen within box, but 4000km away
+			Assert.Equal(Seq(StMatthewIsland, Anadyr), r5);
+
+			var r6 = new List<Place>();
+			qt.QueryGeo(new Point(180.0, 75.0), 3000 * km, 10, null, r6); // now within box and 3000km
+			Assert.Equal(Seq(Anadyr, StMatthewIsland, Longyearbyen), r6);
+		}
+
+		[Fact]
+		public void CanQueryWithCollector()
+		{
+			var qt = GetSampleDataset();
+			var extent = new Envelope(50, 0, 100, 42);
+
+			var list = new List<Place>();
+			void Collector(Place place, Point point) => list.Add(place);
+
+			qt.Query(extent, Collector);
+
+			Assert.Equal(Seq(Atlanta, Miami, Mobile), list.OrderBy(p => p.Tag));
+		}
+
+		[Fact]
 		public void CanBorderlineInsertion()
 		{
 			var qt = GetSampleDataset();
@@ -231,8 +279,8 @@ namespace Sylphe.Utils.Test
 
 			qt.ReplaceCoincident = true;
 
-			var foo = new Place("Foo", Chicago.Point.X, Chicago.Point.Y);
-			var bar = new Place("Bar", Omaha.Point.X, Omaha.Point.Y);
+			var foo = new Place(Chicago.Point.X, Chicago.Point.Y, "Foo");
+			var bar = new Place(Omaha.Point.X, Omaha.Point.Y, "Bar");
 
 			qt.Add(foo, foo.Point); // should replace Chicago
 			qt.Add(bar, bar.Point); // should replace Omaha
@@ -367,16 +415,16 @@ namespace Sylphe.Utils.Test
 		#region Test data
 
 		// Places for sample dataset: taken from Hanan & Samet's book
-		private static readonly Place Chicago = new Place("Chicago", 35, 42);
-		private static readonly Place Mobile = new Place("Mobile", 52, 10);
-		private static readonly Place Toronto = new Place("Toronto", 62, 77);
-		private static readonly Place Buffalo = new Place("Buffalo", 82, 65);
-		private static readonly Place Denver = new Place("Denver", 5, 45);
-		private static readonly Place Omaha = new Place("Omaha", 27, 35);
-		private static readonly Place Atlanta = new Place("Atlanta", 85, 15);
-		private static readonly Place Miami = new Place("Miami", 90, 5);
+		private static readonly Place Chicago = new Place(35, 42, "Chicago");
+		private static readonly Place Mobile = new Place(52, 10, "Mobile");
+		private static readonly Place Toronto = new Place(62, 77, "Toronto");
+		private static readonly Place Buffalo = new Place(82, 65, "Buffalo");
+		private static readonly Place Denver = new Place(5, 45, "Denver");
+		private static readonly Place Omaha = new Place(27, 35, "Omaha");
+		private static readonly Place Atlanta = new Place(85, 15, "Atlanta");
+		private static readonly Place Miami = new Place(90, 5, "Miami");
 
-		private static readonly Place Memphis = new Place("Memphis", 35, 20);
+		private static readonly Place Memphis = new Place(35, 20, "Memphis");
 
 		private static PointQuadtree<Place> GetSampleDataset()
 		{
@@ -391,6 +439,48 @@ namespace Sylphe.Utils.Test
 			quadtree.Add(Atlanta, Atlanta.Point);
 			quadtree.Add(Miami, Miami.Point);
 			// don't add Memphis
+
+			quadtree.Build();
+
+			return quadtree;
+		}
+
+		// Places around the globe (hand digitized)
+		private static readonly Place FernsehturmBerlin = new Place(13.409422, 52.520824, "Fernsehturm, Berlin");
+		private static readonly Place ElizabethTowerLondon = new Place(-0.124554, 51.500695, "Elizabeth Tower, London");
+		private static readonly Place NotreDameTourNord = new Place(2.349272, 48.853402, "Tour nord du Notre Dame, Paris");
+		private static readonly Place NotreDameTourSud = new Place(2.349035, 48.853087, "Tour sud du Notre Dame, Paris");
+		private static readonly Place EiffelTower = new Place(2.294525, 48.858270, "Tour Eiffel, Paris");
+		private static readonly Place EsriRedlands = new Place(-117.195700, 34.056495, "Esri, Redlands");
+		private static readonly Place LadyLiberty = new Place(-74.044540, 40.689247, "Statue of Liberty, New York");
+		private static readonly Place SydneyOpera = new Place(151.214366, -33.857499, "Sydney Opera House, Sydney");
+		private static readonly Place Anadyr = new Place(177.516667, 64.733333, "Anadyr");
+		private static readonly Place Josefstrasse21 = new Place(8.533677, 47.380877, "Josefstrasse 21, 8005 Zürich");
+		private static readonly Place Josefstrasse211 = new Place(8.521943, 47.387117, "Josefstrasse 211, 8005 Zürich");
+		private static readonly Place Josefstrasse212 = new Place(8.523117, 47.387069, "Josefstrasse 212, 8005 Zürich");
+		private static readonly Place Josefstrasse214 = new Place(8.523265, 47.387221, "Josefstrasse 214, 8005 Zürich");
+		private static readonly Place Josefstrasse218 = new Place(8.522689, 47.387523, "Josefstrasse 218, 8005 Zürich");
+		private static readonly Place Josefstrasse216 = new Place(8.5225, 47.387354, "Josefstrasse 216, 8005 Zürich");
+		private static readonly Place KigaliAirport = new Place(30.134993, -1.963173, "Kigali Airport, Kigali");
+		private static readonly Place StMatthewIsland = new Place(-172.72, 60.4086, "St. Matthew Island");
+		private static readonly Place Longyearbyen = new Place(16.6497, 78.2194, "Longyearbyen, Spitsbergen");
+
+		private static PointQuadtree<Place> GetGlobalDataset()
+		{
+			var places = new[]
+			{
+				FernsehturmBerlin, ElizabethTowerLondon, NotreDameTourNord, NotreDameTourSud,
+				EiffelTower, EsriRedlands, LadyLiberty, SydneyOpera, Anadyr, Josefstrasse21,
+				Josefstrasse211, Josefstrasse212, Josefstrasse214, Josefstrasse216,
+				Josefstrasse218, KigaliAirport, StMatthewIsland, Longyearbyen
+			};
+
+			var quadtree = new PointQuadtree<Place>();
+
+			foreach (var place in places)
+			{
+				quadtree.Add(place, place.Point);
+			}
 
 			quadtree.Build();
 
@@ -430,7 +520,7 @@ namespace Sylphe.Utils.Test
 			public string Tag { get; }
 			public Point Point { get; }
 
-			public Place(string tag, double x, double y)
+			public Place(double x, double y, string tag)
 			{
 				if (tag == null)
 					throw new ArgumentNullException(nameof(tag));
