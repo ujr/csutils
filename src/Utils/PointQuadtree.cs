@@ -257,16 +257,16 @@ namespace Sylphe.Utils
 
 				bbox = bbox.Expand(node.Point);
 
-				var ne = node[Quadrant.NE];
+				var ne = node[Quadrant.NorthEast];
 				if (ne != null) stack.Push(new KeyValuePair<Node, int>(ne, depth + 1));
 
-				var nw = node[Quadrant.NW];
+				var nw = node[Quadrant.NorthWest];
 				if (nw != null) stack.Push(new KeyValuePair<Node, int>(nw, depth + 1));
 
-				var sw = node[Quadrant.SW];
+				var sw = node[Quadrant.SouthWest];
 				if (sw != null) stack.Push(new KeyValuePair<Node, int>(sw, depth + 1));
 
-				var se = node[Quadrant.SE];
+				var se = node[Quadrant.SouthEast];
 				if (se != null) stack.Push(new KeyValuePair<Node, int>(se, depth + 1));
 			}
 		}
@@ -376,25 +376,25 @@ namespace Sylphe.Utils
 
 				if (east && north)
 				{
-					var sub = node[Quadrant.NE];
+					var sub = node[Quadrant.NorthEast];
 					if (sub != null) stack.Push(sub);
 				}
 
 				if (north && west)
 				{
-					var sub = node[Quadrant.NW];
+					var sub = node[Quadrant.NorthWest];
 					if (sub != null) stack.Push(sub);
 				}
 
 				if (west && south)
 				{
-					var sub = node[Quadrant.SW];
+					var sub = node[Quadrant.SouthWest];
 					if (sub != null) stack.Push(sub);
 				}
 
 				if (south && east)
 				{
-					var sub = node[Quadrant.SE];
+					var sub = node[Quadrant.SouthEast];
 					if (sub != null) stack.Push(sub);
 				}
 			}
@@ -413,11 +413,11 @@ namespace Sylphe.Utils
 
 			if (pointX < reference.X)
 			{
-				result = pointY < reference.Y ? Quadrant.SW : Quadrant.NW;
+				result = pointY < reference.Y ? Quadrant.SouthWest : Quadrant.NorthWest;
 			}
 			else
 			{
-				result = pointY < reference.Y ? Quadrant.SE : Quadrant.NE;
+				result = pointY < reference.Y ? Quadrant.SouthEast : Quadrant.NorthEast;
 			}
 
 			return result;
@@ -429,10 +429,10 @@ namespace Sylphe.Utils
 			{
 				writer.Write("({0} ", node.Payload);
 
-				Dump(node[Quadrant.NE], writer);
-				Dump(node[Quadrant.NW], writer);
-				Dump(node[Quadrant.SW], writer);
-				Dump(node[Quadrant.SE], writer);
+				Dump(node[Quadrant.NorthEast], writer);
+				Dump(node[Quadrant.NorthWest], writer);
+				Dump(node[Quadrant.SouthWest], writer);
+				Dump(node[Quadrant.SouthEast], writer);
 
 				writer.Write(")");
 			}
@@ -453,10 +453,10 @@ namespace Sylphe.Utils
 
 		private enum Quadrant
 		{
-			NE = 0,
-			NW = 1,
-			SW = 2,
-			SE = 3
+			NorthEast = 0,
+			NorthWest = 1,
+			SouthWest = 2,
+			SouthEast = 3
 		}
 
 		#endregion
@@ -511,7 +511,7 @@ namespace Sylphe.Utils
 					{
 						// Nearest first:
 						int startIndex = list.Count - count;
-						ListUtils.Reverse(list, startIndex, count);
+						list.Reverse(startIndex, count);
 					}
 				}
 

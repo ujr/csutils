@@ -41,9 +41,9 @@ namespace Sylphe.Utils
 				throw new InvalidOperationException("Queue is empty");
 			}
 
-			T head = _array[_head];
+			var head = _array[_head];
 
-			_array[_head] = default(T);
+			_array[_head] = default;
 			_head = (_head + 1) % _array.Length;
 			_size -= 1; // one less in queue
 			_version += 1;
@@ -81,7 +81,7 @@ namespace Sylphe.Utils
 
 		public int Capacity
 		{
-			get { return _array.Length; }
+			get => _array.Length;
 			set
 			{
 				if (value < 1)
@@ -125,7 +125,6 @@ namespace Sylphe.Utils
 				// _size didn't change!
 				_array = array;
 				_version += 1;
-				return;
 			}
 			else if (capacity < _array.Length)
 			{
@@ -144,7 +143,6 @@ namespace Sylphe.Utils
 				_size = capacity;
 				_array = array;
 				_version += 1;
-				return;
 			}
 			// else: no change in capacity, nothing to do
 		}
@@ -158,7 +156,7 @@ namespace Sylphe.Utils
 
 		public bool Remove(T item)
 		{
-			throw new NotImplementedException(); // todo can be done in O(n)
+			throw new NotImplementedException(); // could be done in O(n)
 		}
 
 		public bool Contains(T item)
@@ -172,7 +170,7 @@ namespace Sylphe.Utils
 
 			for (int i = 0; i < _size; i++)
 			{
-				T candidate = GetElement(i);
+				var candidate = GetElement(i);
 
 				// Good: comparer treats null and null as equal
 				if (comparer.Equals(item, candidate))
@@ -281,7 +279,7 @@ namespace Sylphe.Utils
 			internal Enumerator(CappedQueue<T> queue)
 			{
 				_index = 0;
-				_current = default(T);
+				_current = default;
 				_version = queue._version;
 				_queue = queue;
 			}
@@ -290,7 +288,7 @@ namespace Sylphe.Utils
 			{
 				_index = 0;
 				_version = _queue._version;
-				_current = default(T);
+				_current = default;
 			}
 
 			public bool MoveNext()
@@ -307,7 +305,7 @@ namespace Sylphe.Utils
 					return true;
 				}
 
-				_current = default(T);
+				_current = default;
 				return false;
 			}
 
@@ -321,7 +319,7 @@ namespace Sylphe.Utils
 				// so MoveNext would return false:
 
 				_index = _queue._size;
-				_current = default(T);
+				_current = default;
 			}
 		}
 

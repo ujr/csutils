@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
+    <RootNamespace>Sylphe.Cdb.Test</RootNamespace>
+    <AssemblyName>Sylphe.Cdb.Test</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

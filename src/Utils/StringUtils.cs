@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -209,9 +209,9 @@ namespace Sylphe.Utils
 		}
 
 		/// <summary>
-		/// The same as <see cref="string.CompareOrdinal"/>, but compare
-		/// only up to the first occurrence of the given stop char. For
-		/// example, if stop = '#', "foo" and "foo#bar" compare equal.
+		/// The same as <see cref="string.CompareOrdinal(string,string)"/>,
+		/// but compare only up to the first occurrence of the given stop char.
+		/// For example, if stop = '#', "foo" and "foo#bar" compare equal.
 		/// </summary>
 		public static int CompareOrdinal(string x, string y, char stop)
 		{

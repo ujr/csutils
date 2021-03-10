@@ -12,7 +12,7 @@ namespace Sylphe.Utils.Test
 			int[] sequence = null;
 			const int sampleSize = 5;
 
-			Assert.Throws<ArgumentNullException>(() => Algorithms.ReservoirSample(sequence, sampleSize));
+			Assert.Throws<ArgumentNullException>(() => sequence.ReservoirSample(sampleSize));
 		}
 
 		[Fact]
@@ -29,13 +29,17 @@ namespace Sylphe.Utils.Test
 		[Fact]
 		public void ReservoirSample_SampleIsSubset()
 		{
-			var sequence = Enumerable.Range(0, 20);
+			var population = Enumerable.Range(0, 20).ToList();
 			const int sampleSize = 5;
 
-			var sample = sequence.ReservoirSample(sampleSize);
+			var sample = population.ReservoirSample(sampleSize);
 
-			Action<int> fromSequence = x => sequence.Contains(x);
-			Assert.Collection(sample, fromSequence, fromSequence, fromSequence, fromSequence, fromSequence);
+			void IsFromPop(int x)
+			{
+				Assert.Contains(x, population);
+			}
+
+			Assert.Collection(sample, IsFromPop, IsFromPop, IsFromPop, IsFromPop, IsFromPop);
 		}
 
 		[Fact]

@@ -86,7 +86,7 @@ namespace Sylphe.Cdb.Test
 			Assert.Equal(r1.Data, Cdb.Get(filePath, r1.Key));
 
 			var list = new List<byte[]>();
-			list.Add(Cdb.Get(filePath, r2.Key, 0));
+			list.Add(Cdb.Get(filePath, r2.Key));
 			list.Add(Cdb.Get(filePath, r2.Key, 1));
 			Assert.Null(Cdb.Get(filePath, r2.Key, 2));
 			Assert.Null(Cdb.Get(filePath, r2.Key, 99));

@@ -4,7 +4,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Sylph.Utils.Test
+namespace Sylphe.Utils.Test
 {
 	public class ClusteringTest
 	{

@@ -569,6 +569,7 @@ namespace Sylphe.Utils
 		/// to <paramref name="result"/>. Strings are formatted as
 		/// C like strings, <c>null</c> as "null", boolean values
 		/// as "true" or "false", and numbers using invariant culture.
+		/// </summary>
 		public static void FormatValue(object value, StringBuilder result)
 		{
 			if (value == null)
@@ -577,14 +578,13 @@ namespace Sylphe.Utils
 				return;
 			}
 
-			if (value is bool)
+			if (value is bool b)
 			{
-				result.Append(((bool) value) ? "true" : "false");
+				result.Append(b ? "true" : "false");
 				return;
 			}
 
-			var s = value as string;
-			if (s != null)
+			if (value is string s)
 			{
 				FormatString(s, result);
 				return;
@@ -636,7 +636,7 @@ namespace Sylphe.Utils
 
 		#region Nested types: Token and TokenType
 
-		private struct Token
+		private readonly struct Token
 		{
 			public readonly int Index;
 			public readonly TokenType Type;

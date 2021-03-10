@@ -11,7 +11,7 @@ namespace Sylphe.Utils.Test
 		{
 			var list = new int[0]; // empty
 
-			Algorithms.Shuffle(list);
+			list.Shuffle();
 
 			Assert.Empty(list);
 		}
@@ -23,13 +23,13 @@ namespace Sylphe.Utils.Test
 
 			list.Shuffle();
 
-			Assert.Equal(new int[]{42}, list);
+			Assert.Equal(new[]{42}, list);
 		}
 
 		[Fact]
 		public void Shuffle_Preserve_Items()
 		{
-			var list = new int[] {1, 2, 3};
+			var list = new[] {1, 2, 3};
 
 			list.Shuffle();
 
@@ -43,7 +43,7 @@ namespace Sylphe.Utils.Test
 		{
 			IList<int> list = null;
 
-			Assert.Throws<ArgumentNullException>(() => Algorithms.Shuffle(list));
+			Assert.Throws<ArgumentNullException>(() => list.Shuffle());
 		}
 	}
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sylph.Utils
+namespace Sylphe.Utils
 {
 	public static partial class Algorithms
 	{
@@ -90,7 +90,7 @@ namespace Sylph.Utils
 
 		/// <summary>
 		/// K-means clustering assigns N data points to K clusters.
-		/// This method computes <paramref name="count"/> iterations
+		/// This method computes <paramref name="n"/> iterations
 		/// of Lloyd's k-means clustering. Each iteration improves the
 		/// result.
 		/// </summary>
@@ -102,7 +102,7 @@ namespace Sylph.Utils
 				return Enumerable.Empty<Point>();
 
 			// TODO initial centers should be spread over all input points
-			var centers = Sylphe.Utils.Algorithms.ReservoirSample(points, k);
+			var centers = ReservoirSample(points, k);
 
 			// TODO iterate until stable (no more re-assignments)
 			for (int i = 0; i < n; i++)

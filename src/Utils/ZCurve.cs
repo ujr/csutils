@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -85,7 +85,7 @@ namespace Sylphe.Utils
 		/// </summary>
 		public static bool IsInsideBox(ulong z, ulong qlo, ulong qhi)
 		{
-			/// Do not decode x and y, just mask off every other bit
+			// Do not decode x and y, just mask off every other bit
 			const ulong xmask = 0x5555555555555555UL;
 			const ulong ymask = 0xAAAAAAAAAAAAAAAAUL;
 
@@ -311,7 +311,7 @@ namespace Sylphe.Utils
 			return level;
 		}
 
-		public struct Block
+		public readonly struct Block
 		{
 			/// <summary>
 			/// The block's starting Z address, any ulong value.

@@ -16,7 +16,7 @@ namespace Sylphe.Cdb
 			using (var cdb = new CdbFile(cdbFilePath))
 			{
 				cdb.FindStart();
-				while (skip-- > 0 && cdb.FindNext(key) != null);
+				while (skip-- > 0 && cdb.FindNext(key) != null) {}
 				return cdb.FindNext(key);
 			}
 		}
@@ -59,8 +59,8 @@ namespace Sylphe.Cdb
 		/// <summary>
 		/// Make a CDB file from the given records.
 		/// </summary>
-		/// <param name="records"/>The key/data records to add.</param>
-		/// <param name="cdbFilePath"/>The target CDB file path.</param>
+		/// <param name="records">The key/data records to add.</param>
+		/// <param name="cdbFilePath">The target CDB file path.</param>
 		public static void Make(IEnumerable<Record> records, string cdbFilePath)
 		{
 			using (var maker = new CdbMake(cdbFilePath))
@@ -100,7 +100,7 @@ namespace Sylphe.Cdb
 		/// Enumerate all records in the given CDB in an undefined order.
 		/// The file stream must be readable but not necessarily seekable.
 		/// </summary>
-		/// <param name="cdbFilePath">The CDB file stream.</param>
+		/// <param name="cdbFile">The CDB file stream.</param>
 		public static IEnumerable<Record> Dump(Stream cdbFile)
 		{
 			// Read the end-of-data value
@@ -130,7 +130,7 @@ namespace Sylphe.Cdb
 				ReadBytes(cdbFile, data, (int) dlen);
 				pos += dlen;
 
-				yield return new Cdb.Record(key, data);
+				yield return new Record(key, data);
 			}
 		}
 

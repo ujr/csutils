@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -233,9 +232,9 @@ namespace Sylphe.Json.Test
 		{
 			Assert.True(reader.Read()); // or too little JSON input
 
-			if (reader.Value is double && value is int)
+			if (reader.Value is double && value is int i)
 			{
-				value = (double) (int) value;
+				value = (double) i;
 			}
 
 			Assert.Equal(type, reader.Type);

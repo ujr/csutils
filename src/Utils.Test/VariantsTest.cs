@@ -77,7 +77,7 @@ namespace Sylphe.Utils.Test
 		public void CanIgnoreUnmatchedClosingBrackets()
 		{
 			var actual = Variants.Expand("f]o|o]").ToList();
-			var expected = new string[]{"fo", "o"};
+			var expected = new[]{"fo", "o"};
 			Assert.Equal(expected, actual);
 		}
 
@@ -85,7 +85,7 @@ namespace Sylphe.Utils.Test
 		public void CanImplicitlyCloseUnmatchedOpeningBrackets()
 		{
 			var actual = Variants.Expand("[f[o[o").ToList();
-			var expected = new string[]{"f", "fo", "foo"};
+			var expected = new[]{"f", "fo", "foo"};
 			Assert.Equal(expected, actual);
 		}
 

@@ -41,7 +41,8 @@ namespace Sylphe.Utils.Test
 			// It interleaves bits of a single word, whereas ZCurve.Encode
 			// interleaves the bits of two words.
 
-			uint t, x = 0xDEADBEEF; // 1101 1110 1010 1101  1011 1110 1110 1111
+			uint x = 0xDEADBEEF; // 1101 1110 1010 1101  1011 1110 1110 1111
+			uint t;
 
 			t = (x ^ (x >> 8)) & 0x0000FF00; x = x ^ t ^ (t << 8);
 			t = (x ^ (x >> 4)) & 0x00F000F0; x = x ^ t ^ (t << 4);
@@ -382,7 +383,7 @@ namespace Sylphe.Utils.Test
 
 			// Expected result: 3 6 7 9 11 (12..15) 18 19 (24..27) 33 36 37 48 49
 			var starts = new ulong[] { 3, 6, 7, 9, 11, 12, 18, 19, 24, 33, 36, 37, 48, 49 };
-			var levels = new int[] { 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0 };
+			var levels = new[] { 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0 };
 			var expected = starts.Zip(levels, (s, l) => new ZCurve.Block(s, l)).ToList();
 			var actual = new List<ZCurve.Block>();
 

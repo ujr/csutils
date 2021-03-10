@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Sylphe.Utils.Text
+namespace Sylphe.Utils.Test
 {
 	public class RichTextBuilderTest
 	{
@@ -20,7 +20,7 @@ namespace Sylphe.Utils.Text
 			var rtf = builder.ToRtf();
 			_output.WriteLine(rtf);
 			const string expected = @"{\rtf1\ansi\deff0{\fonttbl{\f0\fnil Microsoft Sans Serif;}}}";
-			Assert.Equal(expected, rtf.Replace("\n", ""));
+			Assert.Equal(expected, rtf.Replace("\n", "").Replace("\r", ""));
 		}
 
 		[Fact]

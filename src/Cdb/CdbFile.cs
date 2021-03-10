@@ -50,10 +50,7 @@ namespace Sylphe.Cdb
 			_loop = 0;
 		}
 
-		public long Length
-		{
-			get { return _cdbFile == null ? 0 : _cdbFile.Length; }
-		}
+		public long Length => _cdbFile?.Length ?? 0;
 
 		public void Close()
 		{

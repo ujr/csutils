@@ -123,7 +123,7 @@ namespace Sylphe.Utils.Test
 		[Fact]
 		public void CanQueryNearFiltered()
 		{
-			PointQuadtree<Place> qt = GetSampleDataset();
+			var qt = GetSampleDataset();
 			Predicate<Place> filter = place => place.Tag.Length != 7;
 			var center = new Point(50, 50);
 
@@ -522,21 +522,18 @@ namespace Sylphe.Utils.Test
 
 			public Place(double x, double y, string tag)
 			{
-				if (tag == null)
-					throw new ArgumentNullException(nameof(tag));
-
-				Tag = tag;
+				Tag = tag ?? throw new ArgumentNullException(nameof(tag));
 				Point = new Point(x, y);
 			}
 
 			public int CompareTo(Place other)
 			{
-				if (ReferenceEquals(other, null))
+				if (other is null)
 				{
 					return 1; // null sorts first
 				}
 
-				return string.Compare(Tag, other.Tag);
+				return string.CompareOrdinal(Tag, other.Tag);
 			}
 
 			public override string ToString()

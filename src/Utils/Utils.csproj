@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Sylphe.Utils</AssemblyName>
+    <RootNamespace>Sylphe.Utils</RootNamespace>
   </PropertyGroup>
 
 </Project>
