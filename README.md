@@ -22,6 +22,7 @@ Utils
 
  - [BitUtils.cs](src/Utils/BitUtils.cs) - bit query and manipulation methods
  - [CappedQueue.cs](src/Utils/CappedQueue.cs) - a queue (first-in-first-out) of limited capacity
+ - [CircularBuffer.cs](src/Utils/CircularBuffer.cs) - like CappedQueue but with only Add() and ToArray()
  - [Geodesy.cs](src/Utils/Geodesy.cs) - simple geodetic calculations like haversine distance
  - [ListUtils.cs](src/Utils/ListUtils.cs) - some `List<T>` methods but for `IList<T>`
  - [Parsing.cs](src/Utils/Parsing.cs) - parsing text strings (see also: Tokenizer)

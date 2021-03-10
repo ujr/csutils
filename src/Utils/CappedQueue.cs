@@ -121,7 +121,7 @@ namespace Sylphe.Utils
 				}
 
 				_head = 0;
-				_tail = (_size == capacity) ? 0 : _size;
+				_tail = _size == capacity ? 0 : _size;
 				// _size didn't change!
 				_array = array;
 				_version += 1;
