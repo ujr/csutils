@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Sylphe.Json</RootNamespace>
+    <AssemblyName>Sylphe.Json</AssemblyName>
+  </PropertyGroup>
+
+</Project>

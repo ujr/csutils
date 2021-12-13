@@ -45,6 +45,11 @@ JSON
 - [JsonException.cs](src/Json/JsonException.cs) - used by JsonReader (but not by JsonWriter)
 - [Json.cs](src/Json/Json.cs) - minimalistic JSON serialization and hydratisation (dynamics)
 
+CSV
+
+- [CsvWriter.cs](src/Csv/CsvWriter.cs) - simple API to write CSV files
+- [CsvReader.cs](src/Csv/CsvReader.cs) - a low-level reader for CSV files
+
 IR
 
 - Inverted Index trials for Information Retrieval
