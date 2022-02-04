@@ -80,6 +80,19 @@ namespace Sylphe.Utils
 		}
 
 		/// <summary>
+		/// Like <see cref="String.EndsWith(string)"/> but for StringBuilder
+		/// </summary>
+		public static bool EndsWith(this StringBuilder sb, string suffix,
+			StringComparison comparisonType = StringComparison.Ordinal)
+		{
+			if (string.IsNullOrEmpty(suffix)) return true;
+			if (sb == null) return false;
+			if (sb.Length < suffix.Length) return false;
+			int start = sb.Length - suffix.Length;
+			return string.Equals(sb.ToString(start, suffix.Length), suffix, comparisonType);
+		}
+
+		/// <summary>
 		/// Format and join all <paramref name="items"/> into a string.
 		/// Separate items by the given <paramref name="separator"/>.
 		/// </summary>

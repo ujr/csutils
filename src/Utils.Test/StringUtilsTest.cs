@@ -28,7 +28,7 @@ namespace Sylphe.Utils.Test
 		}
 
 		[Fact]
-		public void CanTrimStringBuilder()
+		public void CanStringBuilderTrim()
 		{
 			var sb = new StringBuilder();
 
@@ -43,6 +43,24 @@ namespace Sylphe.Utils.Test
 			Assert.Empty(sb.Trim().ToString());
 
 			Assert.Null(((StringBuilder) null).Trim());
+		}
+
+		[Fact]
+		public void CanStringBuilderEndsWith()
+		{
+			var sb = new StringBuilder();
+
+			Assert.True(sb.EndsWith(null));
+			Assert.True(sb.EndsWith(string.Empty));
+			Assert.False(sb.EndsWith("foo"));
+
+			sb.Append("FooBar");
+
+			Assert.True(sb.EndsWith(""));
+			Assert.True(sb.EndsWith("Bar"));
+			Assert.False(sb.EndsWith("bar"));
+			Assert.True(sb.EndsWith("bar", StringComparison.OrdinalIgnoreCase));
+			Assert.True(sb.EndsWith(sb.ToString()));
 		}
 
 		[Fact]
