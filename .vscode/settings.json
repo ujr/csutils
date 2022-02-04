@@ -3,5 +3,7 @@
         "ul-start-left": false,
         "ul-indent": false,
         "no-multiple-blanks": false
-    }
+    },
+    "dotnet-test-explorer.enableTelemetry": false,
+    "dotnet-test-explorer.testProjectPath": "**/*Test.csproj"
 }

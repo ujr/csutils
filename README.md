@@ -81,8 +81,3 @@ and details about some of the utility classes:
 - [BitUtils.md](/doc/BitUtils.md)
 - [SparseBitSet.pdf](/doc/SparseBitSet.pdf)
 - [ZCurve.pdf](/doc/ZCurve.pdf)
-
-## Notes
-
-.NET Standard 2.1 and .NET 6 provide code annotation attributes
-like `[NotNull]` in the System.Diagnostics.CodeAnalysis namespace.
