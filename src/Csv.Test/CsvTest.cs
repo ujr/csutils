@@ -294,16 +294,15 @@ public class CsvTest
 
 		Assert.Throws<ObjectDisposedException>(() => writer.WriteRecord());
 
-		string expected =
-			"One,Two,Three\n" +
-			"\n" +
-			"QuoteChar,\"\"\"\"\n" +
-			"FieldSeparator,\",\"\n" +
-			"\"a\"\"b\"\"c\",\"line\nbreak\",\"line\rbreak\",\"line\r\nbreak\"\n" +
-			"\" leading\",\"trailing \",\" blanks \"\n"
-			.Replace("\n", Environment.NewLine);
+		var expected = new StringBuilder();
+		expected.AppendLine("One,Two,Three");
+		expected.AppendLine("");
+		expected.AppendLine("QuoteChar,\"\"\"\"");
+		expected.AppendLine("FieldSeparator,\",\"");
+		expected.AppendLine("\"a\"\"b\"\"c\",\"line\nbreak\",\"line\rbreak\",\"line\r\nbreak\"");
+		expected.AppendLine("\" leading\",\"trailing \",\" blanks \"");
 
-		Assert.Equal(expected, buffer.ToString());
+		Assert.Equal(expected.ToString(), buffer.ToString());
 	}
 
 	[Fact]
@@ -326,6 +325,21 @@ public class CsvTest
 		new CsvWriter(new StringWriter(buffer)).WriteRecord(string.Empty).Dispose();
 
 		Assert.Equal(Environment.NewLine, buffer.ToString());
+	}
+
+	[Fact]
+	public void CsvWriterNewlineTest()
+	{
+		// Record Separator shall be Environment.NewLine, which
+		// depends on the platform (CRLF on Windows, LF on Linux)
+		var buffer = new StringBuilder();
+		var writer = new CsvWriter(new StringWriter(buffer));
+		writer.WriteLine("foo");
+		writer.WriteRecord("bar");
+		writer.Dispose();
+
+		string nl = Environment.NewLine;
+		Assert.Equal($"foo{nl}bar{nl}", buffer.ToString());
 	}
 
 	[Fact]
