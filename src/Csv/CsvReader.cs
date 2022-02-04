@@ -34,6 +34,7 @@ namespace Sylphe.Csv
 	{
 		private TextReader _reader;
 		private readonly StringBuilder _buffer;
+		private int _fieldCountFirstRecord;
 
 		private const int CR = 13, LF = 10;
 		private const int CRLF = 0x10FFFF + 1; // max Unicode + 1
@@ -44,6 +45,7 @@ namespace Sylphe.Csv
 			_reader = reader ?? throw new ArgumentNullException(nameof(reader));
 			Values = new List<string>();
 			_buffer = new StringBuilder();
+			_fieldCountFirstRecord = 0;
 
 			QuoteChar = quoteChar;
 			FieldSeparator = fieldSeparator;
@@ -115,6 +117,17 @@ namespace Sylphe.Csv
 
 				if (IsEndOfLine(cc))
 				{
+					if (_fieldCountFirstRecord <= 0)
+					{
+						_fieldCountFirstRecord = Values.Count;
+					}
+					else
+					{
+						while (Values.Count < _fieldCountFirstRecord)
+						{
+							Values.Add(string.Empty);
+						}
+					}
 					RecordNumber += 1;
 					return true;
 				}

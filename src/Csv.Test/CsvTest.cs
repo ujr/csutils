@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -34,8 +35,8 @@ public class CsvTest
 		Assert.Equal(3, reader.LineNumber);
 
 		Assert.True(reader.ReadRecord());
-		Assert.Equal(1, reader.Values.Count);
-		Assert.Empty(reader.Values[0]);
+		Assert.Equal(3, reader.Values.Count);
+		Assert.Empty(string.Join("", reader.Values));
 		Assert.Equal(3, reader.RecordNumber);
 		Assert.Equal(4, reader.LineNumber);
 
@@ -167,6 +168,39 @@ public class CsvTest
 	}
 
 	[Fact]
+	public void CsvReaderPadEmptyTest()
+	{
+		const char sep = ';';
+		const string csv = "a;b;c\nd;e\nf;\ng;h;i;j\nk";
+
+		using (var reader = new CsvReader(new StringReader(csv), sep))
+		{
+			Assert.True(reader.ReadRecord());
+			Assert.Equal(3, reader.Values.Count);
+			Assert.True(Seq("a", "b", "c").SequenceEqual(reader.Values));
+
+			Assert.True(reader.ReadRecord());
+			Assert.Equal(3, reader.Values.Count);
+			Assert.True(Seq("d", "e", "").SequenceEqual(reader.Values));
+
+			Assert.True(reader.ReadRecord());
+			Assert.Equal(3, reader.Values.Count);
+			Assert.True(Seq("f", "", "").SequenceEqual(reader.Values));
+
+			Assert.True(reader.ReadRecord());
+			Assert.Equal(4, reader.Values.Count);
+			Assert.True(Seq("g", "h", "i", "j").SequenceEqual(reader.Values));
+
+			Assert.True(reader.ReadRecord());
+			Assert.Equal(3, reader.Values.Count);
+			Assert.True(Seq("k", "", "").SequenceEqual(reader.Values));
+
+			Assert.False(reader.ReadRecord());
+			Assert.Equal(0, reader.Values.Count);
+		}
+	}
+
+	[Fact]
 	public void CsvFileEndTest()
 	{
 		const char sep = ';';
@@ -217,8 +251,9 @@ public class CsvTest
 		Assert.True(reader.ReadRecord());
 		Assert.Equal(2, reader.RecordNumber);
 		Assert.Equal(7, reader.LineNumber);
-		Assert.Equal(1, reader.Values.Count);
+		Assert.Equal(2, reader.Values.Count);
 		Assert.Empty(reader.Values[0]); // the only field is empty, but quoted
+		Assert.Empty(reader.Values[1]); // pad field to match #fields of first row
 
 		Assert.False(reader.ReadRecord());
 		Assert.Equal(2, reader.RecordNumber);
@@ -259,15 +294,15 @@ public class CsvTest
 
 		Assert.Throws<ObjectDisposedException>(() => writer.WriteRecord());
 
-		const string expected =
-			"One,Two,Three\r\n" +
-			"\r\n" +
-			"QuoteChar,\"\"\"\"\r\n" +
-			"FieldSeparator,\",\"\r\n" +
-			"\"a\"\"b\"\"c\",\"line\nbreak\",\"line\rbreak\",\"line\r\nbreak\"\r\n" +
-			"\" leading\",\"trailing \",\" blanks \"\r\n";
+		string expected =
+			"One,Two,Three\n" +
+			"\n" +
+			"QuoteChar,\"\"\"\"\n" +
+			"FieldSeparator,\",\"\n" +
+			"\"a\"\"b\"\"c\",\"line\nbreak\",\"line\rbreak\",\"line\r\nbreak\"\n" +
+			"\" leading\",\"trailing \",\" blanks \"\n"
+			.Replace("\n", Environment.NewLine);
 
-		Assert.Equal("\r\n", Environment.NewLine);
 		Assert.Equal(expected, buffer.ToString());
 	}
 
@@ -342,15 +377,15 @@ public class CsvTest
 			                reader.Values.Aggregate((s, t) => string.Concat(s, "|", t)));
 
 			Assert.True(reader.ReadRecord());
-			Assert.Equal("",
+			Assert.Equal("||",
 			                reader.Values.Aggregate((s, t) => string.Concat(s, "|", t)));
 
 			Assert.True(reader.ReadRecord());
-			Assert.Equal("QuoteChar|\"",
+			Assert.Equal("QuoteChar|\"|",
 			                reader.Values.Aggregate((s, t) => string.Concat(s, "|", t)));
 
 			Assert.True(reader.ReadRecord());
-			Assert.Equal("FieldSeparator|" + sep,
+			Assert.Equal($"FieldSeparator|{sep}|",
 			                reader.Values.Aggregate((s, t) => string.Concat(s, "|", t)));
 
 			Assert.True(reader.ReadRecord());
@@ -363,5 +398,10 @@ public class CsvTest
 
 			Assert.False(reader.ReadRecord());
 		}
+	}
+
+	private static IEnumerable<T> Seq<T>(params T[] args)
+	{
+		return args;
 	}
 }
