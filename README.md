@@ -86,3 +86,6 @@ and details about some of the utility classes:
 
 .NET Standard 2.1 and .NET 6 provide code annotation attributes
 like `[NotNull]` in the System.Diagnostics.CodeAnalysis namespace.
+
+The *.NET Core Test Explorer* extension for VS Code
+can run unit tests interactively in VS Code.
