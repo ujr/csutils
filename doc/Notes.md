@@ -1,6 +1,7 @@
 
 # Miscellaneous Notes
 
+
 ## Tooling
 
 [Visual Studio Code][vscode] is a freely available source code editor
@@ -14,6 +15,10 @@ for *.csproj* files.
 [xUnit.net][xunit] is a free and open-source unit testing framework
 for .NET under the .NET Foundation.
 
+[.NET Core Test Explorer][testexp] is an extension for VS Code that
+allows running unit tests interactively from within VS Code.
+
+
 [EditorConfig][edconf] helps maintain consistent coding style across editors
 by means of a file *.editorconfig* that documents your style settings.
 Many editors honour *.editorconfig* directly or via an extension.
@@ -21,6 +26,7 @@ Many editors honour *.editorconfig* directly or via an extension.
 Git ignore (.gitignore) template created with
 [www.gitignore.io](http://www.gitignore.io/) (GitHub also has a
 [repo with .gitignore templates](https://github.com/github/gitignore)).
+
 
 ## Concepts & Guides
 
@@ -39,6 +45,12 @@ The .NET Core Guide has a useful section about
   a **Stub** simply stands in for a dependency
   whereas a **Mock** is asserted against.
 
+.NET evolves: as of late 2021, .NET Standard 2.1 and .NET 6 are
+the current versions of the standard and the implementation.
+
+.NET Standard 2.1 and .NET 6 provide code annotation attributes
+like `[NotNull]` in the System.Diagnostics.CodeAnalysis namespace.
+
 **JSON** (JavaScript Object Notation) is a plain-text exchange format
 based on the object literal notation of JavaScript. The MIME Type
 is `application/json`, the file extension typically `.json`, and
@@ -49,6 +61,7 @@ Try [choosealicense.com](https://choosealicense.com/)
 created by the GitHub folks.
 Other options are [opensource.org](https://opensource.org/)
 and [unlicense.org](https://unlicense.org/).
+
 
 ## The .NET Core CLI
 
@@ -105,6 +118,7 @@ dotnet clean    # clean the output of a project
 
 For further capabilities of the CLI, refer to the .NET Core Guide.
 
+
 ## History
 
 Cdb port circa 2010,
@@ -117,6 +131,7 @@ IR stuff 2020 motivated by older code.
 
 [vscode]: https://code.visualstudio.com/
 [csext]: https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp
+[testexp]: https://github.com/formulahendry/vscode-dotnet-test-explorer
 [xunit]: https://xunit.net/
 [edconf]: https://editorconfig.org/
 
