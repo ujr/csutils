@@ -34,6 +34,7 @@ Utils
 - [Shuffle.cs](src/Utils/Shuffle.cs) - shuffling an `IList<T>` (rearrange in random order)
 - [SparseBitSet.cs](src/Utils/SparseBitSet.cs) - fixed size bit set, suitable for sparse data
 - [StringUtils.cs](src/Utils/StringUtils.cs) - utilities for strings, some for rare use cases
+- [Tags.cs](src/Utils/Tags.cs) - utils and immutable type for tags
 - [Tokenizer.cs](src/Utils/Tokenizer.cs) - separate a text into Name/Number/String/Operator tokens
 - [Variants.cs](src/Utils/Variants.cs) - expand variant notation, e.g. `ba[r|z]` to bar and baz
 - [ZCurve.cs](src/Utils/ZCurve.cs) - interlacing two dimensions into Morton order
