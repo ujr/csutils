@@ -64,6 +64,24 @@ namespace Sylphe.Utils.Test
 		}
 
 		[Fact]
+		public void CanStringBuilderReverse()
+		{
+			var sb = new StringBuilder();
+			sb.Append("Hallelujah");
+
+			var o = sb.Reverse(4, 3);
+			Assert.Equal("Hallulejah", sb.ToString());
+			Assert.Same(sb, o);
+
+			sb.Reverse(sb.Length, 0); // border case
+			Assert.Equal("Hallulejah", sb.ToString());
+
+			sb.Clear();
+			sb.Reverse(0, 0);
+			Assert.Equal(0, sb.Length);
+		}
+
+		[Fact]
 		public void CanJoin()
 		{
 			Assert.Equal(string.Empty, StringUtils.Join<string>(null, null));

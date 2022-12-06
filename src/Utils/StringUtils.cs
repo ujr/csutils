@@ -92,6 +92,27 @@ namespace Sylphe.Utils
 			return string.Equals(sb.ToString(start, suffix.Length), suffix, comparisonType);
 		}
 
+		public static StringBuilder Reverse(this StringBuilder sb, int start, int length)
+		{
+			if (sb == null) return null;
+
+			if (start < 0)
+				throw new ArgumentOutOfRangeException(nameof(start));
+			if (start > sb.Length)
+				throw new ArgumentOutOfRangeException(nameof(start));
+			if (length < 0)
+				throw new ArgumentOutOfRangeException(nameof(length));
+			if (start + length > sb.Length)
+				throw new ArgumentOutOfRangeException(nameof(length));
+
+			for (int lo = start, hi = start + length - 1; lo < hi; lo++, hi--)
+			{
+				(sb[lo], sb[hi]) = (sb[hi], sb[lo]);
+			}
+
+			return sb;
+		}
+
 		/// <summary>
 		/// Format and join all <paramref name="items"/> into a string.
 		/// Separate items by the given <paramref name="separator"/>.
