@@ -22,8 +22,10 @@ Utils
 - [BitUtils.cs](src/Utils/BitUtils.cs) - bit query and manipulation methods
 - [CappedQueue.cs](src/Utils/CappedQueue.cs) - a queue (first-in-first-out) of limited capacity
 - [CircularBuffer.cs](src/Utils/CircularBuffer.cs) - like CappedQueue but with only Add() and ToArray()
+- [CubicBezier.cs](src/Utils/CubicBezier.cs) - some operations with cubic Bezier curves
 - [Geodesy.cs](src/Utils/Geodesy.cs) - simple geodetic calculations like haversine distance
 - [ListUtils.cs](src/Utils/ListUtils.cs) - some `List<T>` methods but for `IList<T>`
+- [Pair.cs](src/Utils/Pair.cs) - an X,Y pair as an immutable struct with some operations
 - [Parsing.cs](src/Utils/Parsing.cs) - parsing text strings (see also: Tokenizer)
 - [Point](src/Utils/Point.cs) and [Envelope](src/Utils/Envelope.cs) - immutable (x,y) and (x0,y0,x1,y1)
 - [PointQuadtree.cs](src/Utils/PointQuadtree.cs) - a point quadtree (2D index structure)
