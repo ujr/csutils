@@ -6,7 +6,8 @@
 
 [Visual Studio Code][vscode] is a freely available source code editor
 by Microsoft. It is independent from the commercial Visual Studio IDE.
-Developed mainly in Zurich under the lead of Erich Gamma.
+Developed mainly in Zurich under the lead of Erich Gamma. If the editor
+shows spurious errors it may help to Reload Window (Ctrl+R).
 
 [C# for Visual Studio Code][csext] is an extension for VS Code that
 provides editing and debugging support, development tools, and support
